@@ -1,10 +1,6 @@
-import { IShop } from "./IShop";
-
 export interface ICategory {
   id: string;
   name: string;
-  shop_id: string;
-  shop: IShop | null;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;

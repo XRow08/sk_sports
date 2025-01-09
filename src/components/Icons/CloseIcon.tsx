@@ -1,4 +1,4 @@
-export function CloseIcon({ onClick }: { onClick: () => void }) {
+export function CloseIcon({ onClick }: { onClick?: () => void }) {
   return (
     <svg
       width="30"

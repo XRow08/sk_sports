@@ -15,10 +15,10 @@ export function CartSideNav() {
     >
       <div className="flex flex-col justify-between h-full overflow-y-auto">
         <div className="flex items-center w-full justify-between px-4">
-          <h1 className="text-xl font-bold mb-3 select-none">Carrinho de compras</h1>
-          <div onClick={() => setShowCart(false)} className="cursor-pointer">
-            <CloseIcon />
-          </div>
+          <h1 className="text-xl font-bold mb-3 select-none">
+            Carrinho de compras
+          </h1>
+          <CloseIcon onClick={() => setShowCart(false)} />
         </div>
 
         {items.length > 0 ? (

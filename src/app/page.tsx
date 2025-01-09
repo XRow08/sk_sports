@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import { CategorieList } from "@/components/Categories/CategorieList";
 import { CollectionCard } from "@/components/Collection/CollectionCard";
 import { ProductList } from "@/components/Products/ProductList";
-import { collectionsMock, productsMock } from "@/constants/mock";
+import { collectionsMock } from "@/constants/mock";
 import { ProductService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 

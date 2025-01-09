@@ -1,5 +1,5 @@
+import { ProductService } from "@/services";
 import { useEffect, useState } from "react";
-import { ProductService } from "services";
 
 export default function useProductRate(productId: string) {
   const [rate, setRate] = useState(0);
