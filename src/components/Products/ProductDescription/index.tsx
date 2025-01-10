@@ -12,7 +12,7 @@ export function ProductDescription(product: IProduct) {
     { name: "Gola:", description: product.collar },
   ];
   return (
-    <div className="my-[88px] flex flex-col gap-6">
+    <div className="my-[88px] flex flex-col gap-6 w-full">
       <h1 className="text-[28px] font-bold">Descrição do produto</h1>
       <p>{product.description}</p>
 

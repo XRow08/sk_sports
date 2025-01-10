@@ -1,4 +1,4 @@
-import { useOrderStore } from "@/store";
+import { useAuthStore, useOrderStore } from "@/store";
 import { CloseIcon, NoCartIcon } from "../Icons";
 import { CartList } from "./CartList";
 import { Button } from "../Button";
@@ -6,6 +6,16 @@ import Link from "next/link";
 
 export function CartSideNav() {
   const { showCart, setShowCart, items } = useOrderStore();
+  const { user, setShowAuth, setStepAuth } = useAuthStore();
+
+  function checkUser() {
+    if (user) {
+      setShowCart(false);
+    } else {
+      setShowAuth(true);
+      setStepAuth(0);
+    }
+  }
 
   return (
     <div
@@ -38,11 +48,17 @@ export function CartSideNav() {
         )}
       </div>
 
-      <div className="flex items-center justify-center w-full mt-6">
-        <Button bgColor="black" className="w-1/2">
-          Finalizar carrinho
-        </Button>
-      </div>
+      {items.length > 0 && (
+        <Link
+          onClick={checkUser}
+          href={"/checkout"}
+          className="flex items-center justify-center w-full mt-6"
+        >
+          <Button bgColor="black" className="w-1/2">
+            Finalizar carrinho
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

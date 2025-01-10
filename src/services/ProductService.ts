@@ -72,6 +72,7 @@ export const ProductService = {
 
   async findProductRate(productId: string) {
     const { data } = await Api.get(`/rate-product/productId/${productId}`);
+    console.log(data);
     return data as number;
   },
 
@@ -83,6 +84,11 @@ export const ProductService = {
 
   async rateProduct(payload: ICreateProductRate) {
     const { data } = await Api.post(`/rate-product`, payload);
+    return data as IProductRate;
+  },
+
+  async updateRateProduct(id: string, payload: Partial<ICreateProductRate>) {
+    const { data } = await Api.patch(`/rate-product/${id}`, payload);
     return data as IProductRate;
   },
 

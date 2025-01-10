@@ -5,7 +5,6 @@ export interface IUser {
   first_name: string;
   last_name: string;
   address_id: string;
-  phone: string;
   password: string;
   email: string;
   createdAt: Date;
@@ -14,11 +13,15 @@ export interface IUser {
   address: IAddress | null;
 }
 
+export interface IResetPass {
+  email: string;
+  newPassword: string;
+}
+
 export interface ICreateUser {
   first_name: string;
   last_name: string;
-  address_id: string;
-  phone: string;
+  address_id?: string;
   password: string;
   email: string;
 }

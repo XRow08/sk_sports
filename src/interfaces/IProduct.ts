@@ -86,8 +86,11 @@ export interface IUpdateDailyOffer extends Partial<ICreateDailyOffer> {}
 export interface IProductRate {
   id: string;
   rate: number;
+  title: string;
+  likes: number;
   user_id: string;
   comment: string;
+  images: string[];
   product_id: string;
   product: IProduct;
   createdAt: Date;
@@ -96,10 +99,13 @@ export interface IProductRate {
 }
 
 export interface ICreateProductRate {
+  title: string;
   rate: number;
   product_id: string;
   user_id: string;
   comment: string;
+  images: string[];
+  likes: number;
 }
 
 export interface IUpdateProductRate extends Partial<ICreateProductRate> {}

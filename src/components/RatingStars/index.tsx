@@ -1,6 +1,8 @@
 "use client";
 import { StarIcon } from "../Icons/StarIcon";
 
+export * from "./SelectRateStars"
+
 type Props = { rate: number };
 
 export default function RatingStars({ rate }: Props) {

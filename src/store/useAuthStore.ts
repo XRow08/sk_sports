@@ -10,6 +10,8 @@ export interface useAuthStore {
   setIsAnimate: (e: boolean) => void;
   stepAuth: number;
   setStepAuth: (e: number) => void;
+  email: string;
+  setEmail: (e: string) => void;
 }
 
 export const useAuthStore = create<useAuthStore>((set) => ({
@@ -21,4 +23,6 @@ export const useAuthStore = create<useAuthStore>((set) => ({
   setIsAnimate: (showAuth) => set({ showAuth }),
   stepAuth: 0,
   setStepAuth: (stepAuth) => set({ stepAuth }),
+  email: "",
+  setEmail: (email) => set({ email }),
 }));

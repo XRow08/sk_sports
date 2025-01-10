@@ -1,5 +1,6 @@
 import { AuthModal } from "../AuthModal";
 import { CartSideNav } from "../CartSideNav";
+import { ReviewModal } from "../Reviews/ReviewModal";
 import { SearchSideNav } from "../SearchSideNav";
 
 export function Modals() {
@@ -8,6 +9,7 @@ export function Modals() {
       <CartSideNav />
       <SearchSideNav />
       <AuthModal />
+      <ReviewModal />
     </>
   );
 }

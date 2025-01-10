@@ -76,7 +76,7 @@ export default function useCartItens() {
 
   return {
     addToCart,
-    orderItens: items,
+    items,
     order,
     removeFromCart,
     onChangeAmount,

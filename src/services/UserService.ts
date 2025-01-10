@@ -1,5 +1,11 @@
 import Api from "@/helpers/Api";
-import { ICreateUser, IUser, IUserGroup, IUpdateUser } from "@/interfaces";
+import {
+  ICreateUser,
+  IUser,
+  IUserGroup,
+  IUpdateUser,
+  IResetPass,
+} from "@/interfaces";
 
 export const UserService = {
   async createOne(payload: ICreateUser) {
@@ -24,6 +30,18 @@ export const UserService = {
 
   async findCep(cep: string) {
     const { data } = await Api.get(`/cep/${cep}`);
+    return data;
+  },
+
+  async validateCode(payload: { email: string; code: string }) {
+    const { email, code } = payload;
+    const { data } = await Api.patch(`/users/reset/validate/${email}`, { code });
+    return data;
+  },
+
+  async resetPassword(payload: IResetPass) {
+    const { email, ...rest } = payload;
+    const { data } = await Api.patch(`/users/reset/password/${email}`, rest);
     return data;
   },
 

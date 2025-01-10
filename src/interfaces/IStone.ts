@@ -30,12 +30,11 @@ interface StoneCustomer {
 }
 
 export interface ICreateCardToken {
+  name: string;
   number: string;
-  holder_name: string;
-  holder_document: string;
   cvv: string;
-  exp_month: string;
-  exp_year: string;
+  month: number;
+  year: number;
 }
 
 export interface IPixResponse {
@@ -98,6 +97,6 @@ export interface ICreateCardPix {
 
 export interface ICreateCard {
   installments: number;
-  statement_descriptor: string;
-  card_token: string;
+  document_number: string;
+  token: string;
 }

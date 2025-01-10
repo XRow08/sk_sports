@@ -1,4 +1,4 @@
-import { IOrder, IOrderItem } from "@/interfaces";
+import { IOrder, IOrderItem, IProduct } from "@/interfaces";
 import { create } from "zustand";
 
 export interface useOrderStore {
@@ -8,8 +8,12 @@ export interface useOrderStore {
   setItems: (items: IOrderItem[]) => void;
   showCart: boolean;
   setShowCart: (showCart: boolean) => void;
+  showReview: boolean;
+  setShowReview: (showReview: boolean) => void;
   showSearch: boolean;
   setShowSearch: (showSearch: boolean) => void;
+  productToReview: IProduct | undefined;
+  setProductToReview: (productToReview: IProduct | undefined) => void;
 }
 
 export const useOrderStore = create<useOrderStore>((set) => ({
@@ -19,6 +23,10 @@ export const useOrderStore = create<useOrderStore>((set) => ({
   setItems: (items) => set({ items }),
   showCart: false,
   setShowCart: (showCart) => set({ showCart }),
+  showReview: false,
+  setShowReview: (showReview) => set({ showReview }),
   showSearch: false,
   setShowSearch: (showSearch) => set({ showSearch }),
+  productToReview: undefined,
+  setProductToReview: (productToReview) => set({ productToReview }),
 }));

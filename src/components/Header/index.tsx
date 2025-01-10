@@ -4,10 +4,12 @@ import { HeaderLinks } from "./HeaderLinks";
 
 export function Header() {
   return (
-    <header className="fixed top-0 w-full px-[80px] h-[68px] bg-neutral_2 flex items-center justify-between border-b border-neutral_6">
-      <LogoIcon />
-      <HeaderLinks />
-      <HeaderItens />
+    <header className="fixed top-0 w-full h-[68px] bg-neutral_2 flex items-center justify-center border-b border-neutral_6">
+      <div className="flex items-center justify-between max-w-[1280px] w-full">
+        <LogoIcon />
+        <HeaderLinks />
+        <HeaderItens />
+      </div>
     </header>
   );
 }

@@ -70,7 +70,7 @@ export function Login() {
           <p className="font-medium">Lembrar desta conta</p>
         </label>
         <p
-          onClick={() => setStepAuth(1)}
+          onClick={() => setStepAuth(2)}
           className="font-medium text-neutral_11 cursor-pointer"
         >
           Esqueci minha senha

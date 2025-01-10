@@ -7,7 +7,7 @@ import {
 } from "react";
 import { setCookie, destroyCookie, parseCookies } from "nookies";
 import { useAuthStore } from "@/store";
-import { ILogin, IUser } from "@/interfaces";
+import { ICreateUser, ILogin, IUser } from "@/interfaces";
 import { AuthService, UserService } from "@/services";
 import { StorageHelper } from "@/helpers";
 
@@ -16,6 +16,7 @@ interface AuthContextData {
   loading: boolean;
   onLogin: (values: ILogin) => Promise<void>;
   onLogout: () => void;
+  onSignup: (values: ICreateUser) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -46,7 +47,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
       onClose();
     } catch (error) {
       console.error("Erro ao fazer login:", error);
-      throw error;
+    }
+  };
+
+  const onSignup = async (values: any) => {
+    try {
+      delete values.re_password
+      await UserService.createOne(values);
+      setStepAuth(0);
+    } catch (error) {
+      console.error("Erro ao registrar:", error);
     }
   };
 
@@ -69,7 +79,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, onLogin, onLogout }}>
+    <AuthContext.Provider value={{ user, loading, onLogin, onLogout, onSignup }}>
       {children}
     </AuthContext.Provider>
   );

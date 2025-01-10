@@ -7,3 +7,4 @@ export * from "./AddressService";
 export * from "./CategorieService";
 export * from "./UploadService";
 export * from "./UserService";
+export * from "./AppMaxService";
