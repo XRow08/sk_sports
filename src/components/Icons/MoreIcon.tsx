@@ -1,4 +1,4 @@
-export function MoreIcon() {
+export function MoreIcon({ white }: { white?: boolean }) {
   return (
     <svg
       width="22"
@@ -9,7 +9,7 @@ export function MoreIcon() {
     >
       <path
         d="M10.9998 5.66602V16.3327M16.3332 10.9993L5.6665 10.9993"
-        stroke="#1C2024"
+        stroke={white ? "#EDEEF0" : "#1C2024"}
         strokeWidth="1.33333"
         strokeLinecap="round"
         strokeLinejoin="round"

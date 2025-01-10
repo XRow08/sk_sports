@@ -8,7 +8,7 @@ import { ProductService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["findAll"],
     queryFn: () => ProductService.findAll(),
   });

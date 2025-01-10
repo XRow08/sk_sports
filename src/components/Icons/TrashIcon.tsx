@@ -1,4 +1,4 @@
-export function TrashIcon() {
+export function TrashIcon({ white }: { white?: boolean }) {
   return (
     <svg
       width="22"
@@ -9,7 +9,7 @@ export function TrashIcon() {
     >
       <path
         d="M4.77778 7.44368V16.3326C4.77778 18.2963 6.36965 19.8881 8.33333 19.8881H13.6667C15.6303 19.8881 17.2222 18.2963 17.2222 16.3326V7.44368M12.7778 10.1104V15.4437M9.22222 10.1104L9.22222 15.4437M14.5556 4.77702L13.3055 2.902C12.9758 2.40742 12.4207 2.11035 11.8263 2.11035H10.1737C9.57926 2.11035 9.02418 2.40742 8.69446 2.902L7.44445 4.77702M14.5556 4.77702H7.44445M14.5556 4.77702H19M7.44445 4.77702H3"
-        stroke="#1C2024"
+        stroke={white ? "#EDEEF0" : "#1C2024"}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
