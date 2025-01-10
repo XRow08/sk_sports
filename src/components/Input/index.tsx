@@ -3,15 +3,26 @@ import React, { InputHTMLAttributes } from "react";
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   errors?: string;
   label?: string;
+  theme?: string;
 }
 
-export function Input({ errors, label, ...rest }: Props) {
+export function Input({ errors, label, theme = "white", ...rest }: Props) {
   return (
-    <label>
-      {label && <p className="font-medium">{label}</p>}
+    <label className="w-full">
+      {label && (
+        <p
+          className={`font-medium ${
+            theme === "dark" ? "text-dark_neutral_12" : "text-neutral_12"
+          }`}
+        >
+          {label}
+        </p>
+      )}
       <input
         {...rest}
-        className="border-[1.5px] border-neutral_6 rounded-lg p-3 font-semibold text-neutral_11 outline-none w-full"
+        className={`border-[1.5px] border-neutral_6 rounded-lg p-3 font-semibold ${
+          theme === "dark" ? "text-dark_neutral_11" : "text-neutral_11"
+        } outline-none w-full`}
       />
       {errors && <small className="text-red-600">{errors}</small>}
     </label>

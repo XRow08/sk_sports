@@ -18,3 +18,4 @@ export * from "./NotFoundIcon";
 export * from "./PasswordIcon";
 export * from "./CheckIcon";
 export * from "./ContactIcon"
+export * from "./CardIcon";

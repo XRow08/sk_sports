@@ -1,31 +1,27 @@
 "use client";
 import { CheckoutItem } from "@/components/CartSideNav/CheckoutItem";
-import { ContactIcon, LogoIcon } from "@/components/Icons";
+import { CheckoutForm } from "@/components/CheckoutForm";
+import { LogoIcon } from "@/components/Icons";
 import { FormatNumber } from "@/helpers";
 import useCartItens from "@/hooks/useCartItens";
 
 export default function Checkout() {
   const { items, totalPrice } = useCartItens();
-  const { formatToBRL, applyDiscount } = FormatNumber;
+  const { formatToBRL } = FormatNumber;
 
   return (
-    <section className="flex flex-col w-screen min-h-screen h-screen">
+    <section className="flex flex-col w-full min-h-screen h-full">
       <header className="h-[64px] w-full bg-dark_neutral_1 flex items-center justify-center border-b border-dark_neutral_6">
         <h1 className="text-dark_neutral_12 font-extrabold text-2xl">
           Pagamento
         </h1>
       </header>
-      <section className="flex items-start h-full text-dark_neutral_12">
-        <div className="pt-[64px] w-full px-20 pb-[88px] flex flex-col items-start justify-start">
+      <section className="flex items-start min-h-screen h-full text-dark_neutral_12 relative">
+        <div className="pt-[64px] w-1/2 px-20 pb-[88px] flex flex-col items-start justify-start">
           <LogoIcon size={64} />
-          <div className="flex items-center gap-2 mt-8">
-            <div className="h-6 w-6 border border-neutral_6 bg-neutral_3 rounded-lg flex items-center justify-center">
-              <ContactIcon />
-            </div>
-            <h1 className="text-neutral_12 font-semibold text-xl">Contato</h1>
-          </div>
+          <CheckoutForm />
         </div>
-        <div className="w-full h-full bg-dark_neutral_1 px-20 pt-[64px] pb-4">
+        <div className="absolute right-0 top-0 w-1/2 h-full bg-dark_neutral_1 px-20 pt-[64px] pb-4">
           <div className="flex flex-col gap-3 border-b border-dark_neutral_6 pb-4">
             <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
               Subtotal{" "}

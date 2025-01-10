@@ -14,6 +14,10 @@ export interface useOrderStore {
   setShowSearch: (showSearch: boolean) => void;
   productToReview: IProduct | undefined;
   setProductToReview: (productToReview: IProduct | undefined) => void;
+  paymentMethod: string;
+  setPaymentMethod: (paymentMethod: string) => void;
+  showInstallments: boolean;
+  setShowInstallments: (showInstallments: boolean) => void;
 }
 
 export const useOrderStore = create<useOrderStore>((set) => ({
@@ -29,4 +33,8 @@ export const useOrderStore = create<useOrderStore>((set) => ({
   setShowSearch: (showSearch) => set({ showSearch }),
   productToReview: undefined,
   setProductToReview: (productToReview) => set({ productToReview }),
+  paymentMethod: "",
+  setPaymentMethod: (paymentMethod) => set({ paymentMethod }),
+  showInstallments: false,
+  setShowInstallments: (showInstallments) => set({ showInstallments }),
 }));

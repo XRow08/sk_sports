@@ -15,7 +15,7 @@ export function Layout({ children }: PropsWithChildren) {
       <Modals />
       <section
         className={`${
-          isCheckout ? "" : "px-[80px] max-w-[1440px] pt-[92px]"
+          isCheckout ? "w-full h-full" : "px-[80px] max-w-[1440px] pt-[92px]"
         } min-h-screen`}
       >
         {children}
