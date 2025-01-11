@@ -16,7 +16,7 @@ export function ProductCard(item: IProduct) {
           width={10000}
           className="w-full min-h-[339px] rounded-2xl object-cover"
         />
-        <p className="text-lg text-start w-full">{item.name}</p>
+        <p className="text-lg font-bold text-start w-full">{item.name}</p>
         <div className="flex justify-between w-full">
           <div className="flex items-baseline gap-1">
             <p className="font-extrabold text-xl">{formatToBRL(item.price)}</p>
