@@ -25,15 +25,15 @@ export default function ProductsPage() {
     <section className="flex gap-10 w-full">
       <Filters onChange={(e) => setFilters(e)} />
       <div className="w-full">
-        <div className="flex items-center justify-between w-full">
-          <h1 className="text-[28px] font-bold pb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full">
+          <h1 className="text-xl lg:text-[28px] font-bold lg:pb-4">
             Todos os nossos produtos
           </h1>
-          <p className="text-lg text-neutral_11">
+          <p className="text-sm lg:text-lg text-neutral_11">
             +{productList.length} produtos
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-5 w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
           {productList.length > 0 ? (
             <ProductList slice={999} products={productList} />
           ) : (

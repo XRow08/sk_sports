@@ -19,3 +19,4 @@ export * from "./PasswordIcon";
 export * from "./CheckIcon";
 export * from "./ContactIcon"
 export * from "./CardIcon";
+export * from "./MenuIcon";

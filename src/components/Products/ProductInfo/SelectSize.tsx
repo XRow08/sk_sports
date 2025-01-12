@@ -10,7 +10,7 @@ export function SelectSize({ sizes }: { sizes: string[] }) {
       <h1 className="text-neutral_11 font-medium mb-3">
         Tamanho: <span className="font-bold text-neutral_12">{size}</span>
       </h1>
-      <div className="flex gap-2 w-full mb-4">
+      <div className="flex flex-wrap gap-2 w-full mb-4">
         {sizeList.map((e) => {
           const isSelected = size === e.name;
           const isAvailable = sizes.includes(e.name.toLowerCase());

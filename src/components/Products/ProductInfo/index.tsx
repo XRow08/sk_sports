@@ -16,10 +16,10 @@ export function ProductInfo(product: IProduct) {
   const isOnCart = items.find((e) => e.product_id === product.id);
 
   return (
-    <div className="flex gap-6 w-full">
-      <div className="flex items-start gap-4">
+    <div className="flex flex-col lg:flex-row gap-6 w-full">
+      <div className="flex flex-col-reverse lg:flex-row items-start gap-4">
         {product.images.length > 0 && (
-          <div className="flex flex-col w-[86px] gap-2 py-2">
+          <div className="flex flex-row lg:flex-col w-[86px] gap-2 py-2">
             {product.images.slice(0, 6).map((e) => (
               <Image
                 src={e}
@@ -38,7 +38,7 @@ export function ProductInfo(product: IProduct) {
           width={10000}
           height={10000}
           draggable={false}
-          className="min-w-[548px] w-[548px] h-[548px] rounded-lg object-cover"
+          className="min-w-[343px] w-[343px] lg:min-w-[548px] lg:w-[548px] h-[343px] lg:h-[548px] rounded-lg object-cover"
         />
       </div>
       <div className="flex flex-col w-full">
@@ -46,13 +46,13 @@ export function ProductInfo(product: IProduct) {
           <h1 className="text-sm">324 Vendidos</h1>
         </div>
         <div>
-          <h1 className="text-[28px] font-bold">{product.name}</h1>
-          <div className="flex items-baseline justify-between">
+          <h1 className="text-xl lg:text-[28px] font-bold">{product.name}</h1>
+          <div className="flex flex-col lg:flex-row items-baseline justify-between">
             <div className="flex items-baseline gap-2">
-              <h1 className="text-[28px] font-extrabold">
+              <h1 className="text-xl lg:text-[28px] font-extrabold">
                 {formatToBRL(applyDiscount(product.price, product.discount))}
               </h1>
-              <h1 className="text-[20px] text-neutral_11 font-semibold">
+              <h1 className="lg:text-[20px] text-neutral_11 font-semibold">
                 {formatToBRL(product.price)}
               </h1>
             </div>
@@ -64,7 +64,7 @@ export function ProductInfo(product: IProduct) {
 
         <div className="w-full h-[1px] bg-neutral_6 mb-6 mt-5" />
 
-        <div className="flex items-center justify-between bg-neutral_3 border mb-6 border-neutral_6 py-2 px-3 rounded-lg">
+        <div className="flex flex-col lg:flex-row items-center justify-between bg-neutral_3 border mb-6 border-neutral_6 py-2 px-3 rounded-lg">
           <div className="flex items-center gap-2">
             <DeliverIcon />
             <h1 className="text-green_9 font-bold">Frete grátis disponível</h1>
@@ -79,7 +79,7 @@ export function ProductInfo(product: IProduct) {
         </div>
         <SelectSize sizes={product.size} />
         <Personalization />
-        <div className="flex items-center gap-3 w-full mt-6">
+        <div className="flex flex-col lg:flex-row items-center gap-3 w-full mt-6">
           <Button bgColor="black" className="w-full">
             <BuyIcon /> Comprar agora
           </Button>

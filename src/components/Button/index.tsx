@@ -32,7 +32,7 @@ export function Button({
           "px-4 py-3 font-medium": size === "normal",
         },
         {
-          "px-6 py-3 text-xl font-semibold": size === "big",
+          "px-6 py-3 text-base lg:text-xl font-semibold": size === "big",
         },
         className
       )}

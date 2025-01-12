@@ -37,12 +37,12 @@ export function Reviews({ rates, product }: Props) {
   });
 
   return (
-    <div className="mt-[88px] w-full">
-      <h1 className="text-[28px] font-bold">Avaliações sobre o produto</h1>
-      <div className="flex w-full items-start justify-between">
-        <div className="flex flex-col min-w-[295px]">
-          <div className="w-full flex items-center justify-between">
-            <h1 className="text-[60px] font-extrabold">{rate.toFixed(1)}</h1>
+    <div className="mt-[60px] lg:mt-[88px] w-full">
+      <h1 className="text-xl lg:text-[28px] font-bold">Avaliações sobre o produto</h1>
+      <div className="flex flex-col lg:flex-row w-full items-start justify-between">
+        <div className="flex flex-col w-full lg:w-auto lg:min-w-[295px]">
+          <div className="w-full flex items-center gap-4 lg:gap-0 lg:justify-between">
+            <h1 className="text-[52px] lg:text-[60px] font-extrabold">{rate.toFixed(1)}</h1>
             <div>
               <RatingStars rate={rate} />
               <p className="font-normal text-neutral_11">
@@ -71,7 +71,7 @@ export function Reviews({ rates, product }: Props) {
           </Button>
         </div>
 
-        <div className="min-w-[870px] w-[870px] flex flex-col gap-3">
+        <div className="lg:min-w-[870px] w-full mt-10 lg:mt-0 lg:w-[870px] flex flex-col gap-3">
           {filteredRates.map((e, i) => (
             <ReviewItem item={e} key={i} />
           ))}

@@ -44,7 +44,7 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
   };
 
   return (
-    <div className="min-w-[306px] w-[306px] h-full flex flex-col border border-neutral_6 rounded-lg">
+    <div className="min-w-[306px] w-[306px] h-full hidden lg:flex flex-col border border-neutral_6 rounded-lg">
       <h1 className="text-[28px] font-bold p-3">Filtros</h1>
       <div className="flex flex-col w-full">
         <FilterItem

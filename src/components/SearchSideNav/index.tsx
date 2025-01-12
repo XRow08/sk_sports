@@ -28,7 +28,7 @@ export function SearchSideNav() {
     <div
       className={`${
         !showSearch ? "translate-x-full" : ""
-      } transition-all duration-300 ease-in-out fixed top-[68px] flex flex-col justify-between z-50 right-0  w-[622px] ${
+      } transition-all duration-300 ease-in-out fixed top-[68px] flex flex-col justify-between z-50 right-0 w-screen lg:w-[622px] ${
         search
           ? "min-h-[calc(100vh-68px)] pb-[88px]"
           : "min-h-min rounded-bl-2xl pb-6"

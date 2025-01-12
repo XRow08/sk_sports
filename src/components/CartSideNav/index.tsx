@@ -21,7 +21,7 @@ export function CartSideNav() {
     <div
       className={`${
         !showCart ? "translate-x-full" : ""
-      } transition-all duration-300 ease-in-out fixed top-[68px] pb-[88px] flex flex-col justify-between z-50 right-0 py-6 w-[622px] min-h-[calc(100vh-68px)] bg-neutral_2 border-l border-neutral_6`}
+      } transition-all duration-300 ease-in-out  fixed top-[68px] pb-[88px] flex flex-col justify-between z-50 right-0 py-6 w-screen lg:w-[622px] min-h-[calc(100vh-68px)] bg-neutral_2 border-l border-neutral_6`}
     >
       <div className="flex flex-col justify-between h-full overflow-y-auto">
         <div className="flex items-center w-full justify-between px-4">

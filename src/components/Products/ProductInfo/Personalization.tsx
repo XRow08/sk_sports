@@ -14,7 +14,7 @@ export function Personalization({ onChange }: { onChange?: (e: any) => void }) {
       <div className="flex items-center gap-3">
         <h1
           onClick={() => setIsPerso(false)}
-          className={`font-medium flex items-center gap-2 cursor-pointer p-3 border rounded-lg ${
+          className={`text-sm lg:text-base font-medium flex items-center gap-2 cursor-pointer p-3 border rounded-lg ${
             !isPerso ? "border-neutral_8" : "border-neutral_6 text-neutral_11"
           }`}
         >
@@ -27,7 +27,7 @@ export function Personalization({ onChange }: { onChange?: (e: any) => void }) {
         </h1>
         <h1
           onClick={() => setIsPerso(true)}
-          className={`font-medium flex items-center gap-2 cursor-pointer p-3 border rounded-lg ${
+          className={`text-sm lg:text-base font-medium flex items-center gap-2 cursor-pointer p-3 border rounded-lg ${
             isPerso ? "border-neutral_8" : "border-neutral_6 text-neutral_11"
           }`}
         >
@@ -41,7 +41,7 @@ export function Personalization({ onChange }: { onChange?: (e: any) => void }) {
       </div>
 
       {isPerso && (
-        <div className="flex items-center gap-3 justify-between w-full">
+        <div className="flex flex-col lg:flex-row items-center gap-3 justify-between w-full">
           <input
             placeholder="Digite o nome desejado"
             className={`p-3 border w-full rounded-lg outline-none ${

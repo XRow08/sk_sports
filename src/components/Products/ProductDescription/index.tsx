@@ -16,7 +16,7 @@ export function ProductDescription(product: IProduct) {
       <h1 className="text-[28px] font-bold">Descrição do produto</h1>
       <p>{product.description}</p>
 
-      <div className="grid grid-cols-2 border-t border-l border-neutral_6 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-l border-neutral_6 overflow-hidden">
         {descriptions.map((e) => (
           <div
             key={e.name}

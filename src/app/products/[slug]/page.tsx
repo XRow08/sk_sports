@@ -12,7 +12,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   return (
-    <section className="flex flex-col min-w-[1280px] w-full max-w-[1440px] items-start justify-start gap-3">
+    <section className="flex flex-col lg:min-w-[1280px] w-full max-w-[1440px] items-start justify-start gap-3">
       <div className="flex items-center w-full">
         <h1 className="text-sm">Página inicial</h1>
         <ArrowIcon size={16} />

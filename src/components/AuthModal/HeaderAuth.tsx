@@ -32,7 +32,7 @@ export function HeaderAuth({ step, setStepAuth, onClose }: Props) {
         <CloseIcon onClick={onClose} />
       </div>
       {step === 5 && <PasswordIcon />}
-      <h1 className="text-[32px] font-bold w-full text-center mt-8">{title}</h1>
+      <h1 className="text-[24px] lg:text-[32px] font-bold w-full text-center mt-8">{title}</h1>
       {step === 3 && (
         <p className="text-neutral_11 w-full text-center">
           Para sua segurança, digite os códigos de 6 dígitos <br /> enviados para o seu

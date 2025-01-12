@@ -67,17 +67,17 @@ export function Login() {
           >
             {remember && <CheckIcon />}
           </div>
-          <p className="font-medium">Lembrar desta conta</p>
+          <p className="font-medium text-sm lg:text-base">Lembrar desta conta</p>
         </label>
         <p
           onClick={() => setStepAuth(2)}
-          className="font-medium text-neutral_11 cursor-pointer"
+          className="font-medium text-neutral_11 cursor-pointer text-sm lg:text-base"
         >
           Esqueci minha senha
         </p>
       </div>
 
-      <div className="flex items-center gap-2 w-full mt-11">
+      <div className="flex flex-col-reverse lg:flex-row items-center gap-2 w-full mt-4 lg:mt-11">
         <Button
           onClick={() => setStepAuth(1)}
           type="button"

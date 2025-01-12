@@ -28,7 +28,7 @@ export function AuthModal() {
   return (
     <div className="fixed top-0 right-0 flex items-center justify-center z-[9999] w-full h-screen bg-[#111113]/90">
       <div
-        className={`w-[560px] min-h-[312px] flex flex-col justify-between transition-all duration-300 ease-in-out bg-neutral_1 rounded-xl p-5`}
+        className={`w-full lg:w-[560px] h-full lg:h-auto min-h-[312px] flex flex-col justify-center lg:justify-between transition-all duration-300 ease-in-out bg-neutral_1 lg:rounded-xl p-5`}
       >
         <HeaderAuth
           step={stepAuth}

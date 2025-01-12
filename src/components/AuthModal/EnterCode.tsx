@@ -37,7 +37,7 @@ export function EnterCode() {
         </p>
       </div>
 
-      <Button type="submit" className="w-full mt-11" bgColor="black">
+      <Button type="submit" className="w-full mt-4 lg:mt-11" bgColor="black">
         Próximo
       </Button>
     </form>

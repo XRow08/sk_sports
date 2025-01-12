@@ -5,7 +5,7 @@ export function CategorieList() {
   return (
     <div className="py-[88px]">
       <h1 className="text-[28px] font-bold pb-4">Categorias</h1>
-      <div className="flex items-center gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         {categoriesMock.map((item) => (
           <CategorieCard key={item.id} {...item} />
         ))}

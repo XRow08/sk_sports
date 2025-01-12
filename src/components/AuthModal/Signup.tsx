@@ -88,7 +88,7 @@ export function Signup() {
         )}
       />
 
-      <Button type="submit" className="w-full mt-11" bgColor="black">
+      <Button type="submit" className="w-full mt-4 lg:mt-11" bgColor="black">
         Criar conta
       </Button>
     </form>

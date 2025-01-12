@@ -7,7 +7,7 @@ export function HeaderItens() {
   const { setShowAuth, user } = useAuthStore();
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="hidden lg:flex items-center space-x-2">
       <SearchIcon
         onClick={() => {
           setShowSearch(!showSearch);
