@@ -34,3 +34,18 @@ export const checkoutSchema = yup.object().shape({
   CVV: yup.string().optional(),
   installments: yup.string().optional(),
 });
+
+export const createProductSchema = yup.object().shape({
+  name: yup.string().required("Nome é obrigatório"),
+  description: yup.string().required("Descricao é obrigatório"),
+  price: yup.number().required("Preco é obrigatório"),
+  discount: yup.number().required("Disconto é obrigatório"),
+  indicate_for: yup.string().required("Indicacao é obrigatório"),
+  sleeve: yup.string().required("Manga é obrigatório"),
+  composition: yup.string().required("Composicao é obrigatório"),
+  collar: yup.string().required("Gola é obrigatório"),
+  tech: yup.string().required("Tecnologia é obrigatório"),
+  cor: yup.string().required("Cor é obrigatório"),
+  gender: yup.string().required("Genero é obrigatório"),
+  club: yup.string().required("Clube é obrigatório"),
+});

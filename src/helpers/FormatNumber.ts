@@ -1,6 +1,6 @@
 export const FormatNumber = {
   formatToBRL(value: number) {
-    if (!value) return "";
+    if (value === undefined || value === null) return "";
     return `R$ ${value.toLocaleString("pt-BR", {
       style: "decimal",
       minimumFractionDigits: 2,

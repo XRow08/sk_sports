@@ -34,7 +34,6 @@ export function ReviewModal() {
         images: newImages,
         rate,
       };
-      console.log(payload)
       await ProductService.rateProduct(payload);
       setShowReview(false);
     } catch (error) {

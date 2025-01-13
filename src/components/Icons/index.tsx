@@ -17,6 +17,8 @@ export * from "./NoCartIcon";
 export * from "./NotFoundIcon";
 export * from "./PasswordIcon";
 export * from "./CheckIcon";
-export * from "./ContactIcon"
+export * from "./ContactIcon";
 export * from "./CardIcon";
 export * from "./MenuIcon";
+export * from "./EditIcon";
+export * from "./DeleteIcon";

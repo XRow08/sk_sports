@@ -2,7 +2,7 @@ import { useAuthStore, useOrderStore } from "@/store";
 import { Button } from "../Button";
 import { CartIcon, SearchIcon } from "../Icons";
 
-export function HeaderItens() {
+export function HeaderItens({ isAdmin }: { isAdmin: boolean }) {
   const { setShowCart, showCart, setShowSearch, showSearch } = useOrderStore();
   const { setShowAuth, user } = useAuthStore();
 

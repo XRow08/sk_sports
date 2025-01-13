@@ -15,8 +15,13 @@ export const ProductService = {
     return data;
   },
 
-  async createProductImages(payload: { product_id: string; file: File }) {
-    const { data } = await Api.post<IProduct>("/product-images/image", payload);
+  async createProductImages(payload: { product_id: string; file: any }) {
+    const headers = { headers: { "Content-Type": "multipart/form-data" } };
+    const { data } = await Api.post<IProduct>(
+      "/product-images/image",
+      payload,
+      headers
+    );
     return data;
   },
 

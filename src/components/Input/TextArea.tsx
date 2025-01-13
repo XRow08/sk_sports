@@ -1,14 +1,12 @@
-import React, { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
 
-export * from "./TextArea";
-
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   errors?: string;
   label?: string;
   theme?: string;
 }
 
-export const Input = forwardRef<HTMLTextAreaElement, Props>(
+export const TextArea = forwardRef<HTMLTextAreaElement, Props>(
   ({ errors, label, theme = "white", ...rest }, ref) => {
     return (
       <label className="w-full">
@@ -21,8 +19,9 @@ export const Input = forwardRef<HTMLTextAreaElement, Props>(
             {label}
           </p>
         )}
-        <input
+        <textarea
           {...rest}
+          ref={ref}
           className={`text-sm lg:text-base border-[1.5px] border-neutral_6 rounded-lg p-3 font-semibold ${
             theme === "dark" ? "text-dark_neutral_11" : "text-neutral_11"
           } outline-none w-full`}
@@ -33,4 +32,4 @@ export const Input = forwardRef<HTMLTextAreaElement, Props>(
   }
 );
 
-Input.displayName = "Input";
+TextArea.displayName = "TextArea";

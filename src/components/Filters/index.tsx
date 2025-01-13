@@ -59,7 +59,8 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
                 type="text"
                 placeholder="R$ 0,00"
                 value={
-                  priceFilter.minPrice
+                  priceFilter.minPrice !== undefined &&
+                  priceFilter.minPrice !== null
                     ? formatToBRL(priceFilter.minPrice.toString())
                     : ""
                 }

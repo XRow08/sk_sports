@@ -32,14 +32,16 @@ export function ProductInfo(product: IProduct) {
             ))}
           </div>
         )}
-        <Image
-          src={product.image_url}
-          alt={product.name}
-          width={10000}
-          height={10000}
-          draggable={false}
-          className="min-w-[343px] w-[343px] lg:min-w-[548px] lg:w-[548px] h-[343px] lg:h-[548px] rounded-lg object-cover"
-        />
+        {product.image_url && (
+          <Image
+            src={product.image_url}
+            alt={product.name}
+            width={10000}
+            height={10000}
+            draggable={false}
+            className="min-w-[343px] w-[343px] lg:min-w-[548px] lg:w-[548px] h-[343px] lg:h-[548px] rounded-lg object-cover"
+          />
+        )}
       </div>
       <div className="flex flex-col w-full">
         <div>

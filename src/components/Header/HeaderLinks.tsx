@@ -1,6 +1,6 @@
 import { headerLinks } from "@/constants";
 
-export function HeaderLinks() {
+export function HeaderLinks({ isAdmin }: { isAdmin: boolean }) {
   return (
     <div className="hidden lg:flex items-center">
       {headerLinks.map((link) => {

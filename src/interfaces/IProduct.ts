@@ -33,12 +33,16 @@ export interface ICreateProduct {
   price: number;
   discount: number;
   image_url: string;
-  slug: string;
-  categories: ICategory | null;
-  rateProduct: string[];
-  productImages: IProductImage[];
-  images: string[];
+  indicate_for: string;
+  sleeve: string;
+  composition: string;
+  collar: string;
+  tech: string;
   cor: string;
+  gender: string;
+  size: string[];
+  categories: string[];
+  club: string;
 }
 
 export interface IUpdateProduct extends Partial<ICreateProduct> {}
