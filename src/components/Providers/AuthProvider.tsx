@@ -10,13 +10,14 @@ import { useAuthStore } from "@/store";
 import { ICreateUser, ILogin, IUser } from "@/interfaces";
 import { AuthService, UserService } from "@/services";
 import { StorageHelper } from "@/helpers";
+import toast from "react-hot-toast";
 
 interface AuthContextData {
   user: IUser | undefined;
   loading: boolean;
   onLogin: (values: ILogin) => Promise<void>;
   onLogout: () => void;
-  onSignup: (values: ICreateUser) => Promise<void>
+  onSignup: (values: ICreateUser) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -44,16 +45,19 @@ export function AuthProvider({ children }: PropsWithChildren) {
       });
       StorageHelper.setItem("user", login.user);
       setUser(login.user);
+      toast.success("Logado com sucesso!");
       onClose();
     } catch (error) {
+      toast.error("Credenciais Invalidas!");
       console.error("Erro ao fazer login:", error);
     }
   };
 
   const onSignup = async (values: any) => {
     try {
-      delete values.re_password
+      delete values.re_password;
       await UserService.createOne(values);
+      toast.success("Usuario criado com sucesso!");
       setStepAuth(0);
     } catch (error) {
       console.error("Erro ao registrar:", error);
@@ -79,7 +83,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, onLogin, onLogout, onSignup }}>
+    <AuthContext.Provider
+      value={{ user, loading, onLogin, onLogout, onSignup }}
+    >
       {children}
     </AuthContext.Provider>
   );
