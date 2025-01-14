@@ -14,6 +14,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       const products = await ProductService.findAll();
+      console.log(products)
       const filteresProducts = FilterHelper.filterData(products, filters);
       setProductList(filteresProducts);
     };

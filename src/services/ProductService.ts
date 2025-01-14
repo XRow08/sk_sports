@@ -40,7 +40,7 @@ export const ProductService = {
     return data;
   },
 
-  async findAll(page = "1", limit = "10") {
+  async findAll(page = "1", limit = "999") {
     const params = new URLSearchParams({ page, limit }).toString();
     const { data } = await Api.get<IProduct[]>(`/products?${params}`);
     return data;

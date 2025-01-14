@@ -4,12 +4,13 @@ export const FormatNumber = {
     return `R$ ${value.toLocaleString("pt-BR", {
       style: "decimal",
       minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     })}`;
   },
 
   reverseFormatBRL(value: string) {
     const numericValue = value.replace(/[R$\s,.]/g, "").replace(",", ".");
-    return parseFloat(numericValue) || 0
+    return parseFloat(numericValue) || 0;
   },
 
   applyDiscount(value: number, percentage: number) {
