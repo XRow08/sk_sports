@@ -1,12 +1,24 @@
 import { DeleteIcon, EditIcon } from "@/components/Icons";
 import { FormatNumber } from "@/helpers";
 import { IProduct } from "@/interfaces";
+import { ProductService } from "@/services";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export function ProductItem({ item }: { item: IProduct }) {
   const { formatToBRL, applyDiscount } = FormatNumber;
   const discountValue = applyDiscount(item.price, item.discount);
+
+  async function onDelete() {
+    try {
+      await ProductService.deleteById(item.id);
+      toast.success("Produto deletado com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao deletar produto, tente novamente.");
+      console.error(error)
+    }
+  }
 
   return (
     <div className="flex items-center justify-between w-full border-b border-neutral_6 py-3 px-4">
@@ -53,7 +65,10 @@ export function ProductItem({ item }: { item: IProduct }) {
           <EditIcon />
         </Link>
 
-        <div className="rounded border border-[#FDBDBE] p-1 cursor-pointer">
+        <div
+          onClick={onDelete}
+          className="rounded border border-[#FDBDBE] p-1 cursor-pointer"
+        >
           <DeleteIcon />
         </div>
       </div>

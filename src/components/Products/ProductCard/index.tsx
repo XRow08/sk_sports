@@ -6,7 +6,7 @@ import Link from "next/link";
 export function ProductCard(item: IProduct) {
   const { formatToBRL, applyDiscount } = FormatNumber;
   const discountValue = applyDiscount(item.price, item.discount);
-  console.log(formatToBRL(discountValue))
+  
   return (
     <Link href={`/products/${item.slug}`}>
       <div className="flex flex-col items-center w-[165px] lg:w-[305px] lg:h-[465px]">

@@ -14,7 +14,6 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       const products = await ProductService.findAll();
-      console.log(products)
       const filteresProducts = FilterHelper.filterData(products, filters);
       setProductList(filteresProducts);
     };
@@ -34,7 +33,7 @@ export default function ProductsPage() {
             +{productList.length} produtos
           </p>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
+        <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
           {productList.length > 0 ? (
             <ProductList slice={999} products={productList} />
           ) : (
