@@ -17,18 +17,8 @@ export const OrderService = {
     return data;
   },
 
-  async findAllByCustomerId(id: string) {
-    const { data } = await Api.get<IOrder[]>(`/orders/customer/${id}`);
-    return data;
-  },
-
-  async findAllBySellerId(id: string) {
-    const { data } = await Api.get<IOrder[]>(`/orders/seller/${id}`);
-    return data;
-  },
-
-  async findAllByShopId(id: string) {
-    const { data } = await Api.get<IOrder[]>(`/orders/shop/${id}`);
+  async findAllByUserId(id: string) {
+    const { data } = await Api.get<IOrder[]>(`/orders/user/${id}`);
     return data;
   },
 

@@ -68,7 +68,7 @@ export default function useCartItens() {
       console.error(error);
     }
   };
-
+  
   const totalPrice = items.reduce(
     (acc, i) => acc + i.product.price * i.quantity,
     0

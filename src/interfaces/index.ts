@@ -4,7 +4,7 @@ export * from "./IOrder";
 export * from "./IProduct";
 export * from "./IFile";
 export * from "./INotification";
-export * from "./IStone";
+export * from "./IAppMax";
 export * from "./ICategory";
 export * from "./IUser";
 export * from "./IPermission";

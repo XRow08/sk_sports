@@ -2,9 +2,9 @@ import { IProduct } from "./IProduct";
 
 export interface IOrder {
   id: string;
-  payment_method_id: string;
+  user_id: string;
   status: string;
-  descount: number;
+  discount: number;
   addition: number;
   portage: number;
   total_price: number;
@@ -15,12 +15,12 @@ export interface IOrder {
 }
 
 export interface ICreateOrder {
-  payment_method_id: string;
+  user_id: string;
   status: string;
-  descount: number;
+  discount: number;
   addition: number;
   portage: number;
-  total_price: number;
+  total_price?: number;
 }
 
 export interface IUpdateOrder extends Partial<ICreateOrder> {}
@@ -42,8 +42,8 @@ export interface ICreateOrderItem {
   order_id: string;
   product_id: string;
   quantity: number;
-  each_price: number;
-  total_price: number;
+  each_price?: number;
+  total_price?: number;
 }
 
 export interface IUpdateOrderItem extends Partial<ICreateOrderItem> {

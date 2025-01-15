@@ -6,12 +6,10 @@ export interface IAddress {
   district: string;
   complement: string;
   cep: string;
-  type_address_id: string;
   number: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
-  typeAddress: ITypeAddress;
 }
 
 export interface ICreateAddress {
@@ -21,7 +19,6 @@ export interface ICreateAddress {
   district?: string;
   complement?: string;
   cep?: string;
-  type_address_id?: string;
   number?: number;
 }
 

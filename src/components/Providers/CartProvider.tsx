@@ -1,37 +1,36 @@
 "use client";
 import { IOrderItem } from "@/interfaces";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { useOrderStore } from "@/store";
+import { useAuthStore, useOrderStore } from "@/store";
 import { StorageHelper } from "@/helpers";
+import { OrderService, OrderItemService } from "@/services";
+import { orderStatus } from "@/constants";
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(true);
-  /* const { findAllByCustomerId } = OrderService;
-  const { findAllByOrderId } = OrderItemService; */
+  const { findAllByUserId } = OrderService;
+  const { findAllByOrderId } = OrderItemService;
   const { setItems, setOrder } = useOrderStore();
+  const { user } = useAuthStore();
 
   const fetchPendingOrder = async () => {
-    /* const customer = StorageHelper.getItem("customer");
-    if (!customer) return;
-    const shop = await ShopService.findOneBySlug(shop_slug);
-    const orders = await findAllByCustomerId(customer.id);
-    const pendingOrder = orders.find((e) => e.status === "pending");
+    if (!user) return;
+    const { waiting_payment } = orderStatus;
+    const orders = await findAllByUserId(user.id);
+    const pendingOrder = orders.find((e) => e.status === waiting_payment);
     if (!pendingOrder) return;
+    console.log(pendingOrder);
     const fetchedItems = await findAllByOrderId(pendingOrder.id);
-    const shopItems = fetchedItems.filter((e) => e.product.shop_id === shop.id);
     const localCart = await getLocalStorageCart();
-    const localCartMap = new Map(
-      localCart.map((item) => [item.product_id, item])
-    );
+    const localCartMap = new Map(localCart.map((e) => [e.product_id, e]));
     const mergedItems = [...localCart];
-
-    for (const fetchedItem of shopItems) {
+    for (const fetchedItem of fetchedItems) {
       if (!localCartMap.has(fetchedItem.product_id)) {
         mergedItems.push(fetchedItem);
       }
     }
     updateLocalStorageCart(mergedItems);
-    setOrder(pendingOrder); */
+    setOrder(pendingOrder);
   };
 
   const updateLocalStorageCart = (updatedCart: IOrderItem[]) => {
@@ -39,9 +38,9 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     setItems(updatedCart);
   };
 
-  const getLocalStorageCart = async () => {
+  const getLocalStorageCart = () => {
     const cart: IOrderItem[] = StorageHelper.getItem(`order_items`);
-    return cart || [];
+    return Promise.resolve(cart || []);
   };
 
   useEffect(() => {
@@ -58,7 +57,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       }
     };
     getOrderItems();
-  }, [setItems]);
+  }, [setItems, user]);
 
   if (loading) return <></>;
 

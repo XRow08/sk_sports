@@ -5,6 +5,14 @@ import {
   YouTubeIcon,
 } from "@/components/Icons";
 
+export const orderStatus = {
+  waiting_payment: "waiting_payment",
+  paid: "paid",
+  canceled: "canceled",
+  shipping: "shipping",
+  delivered: "delivered",
+};
+
 export const headerLinks = [
   { name: "Ínicio", href: "/" },
   { name: "Todos os produtos", href: "/products" },
@@ -28,14 +36,11 @@ export const socialLinks = [
 ];
 
 export const sizeList = [
-  { name: "PP", value: "pp" },
   { name: "P", value: "p" },
   { name: "M", value: "m" },
   { name: "G", value: "g" },
   { name: "GG", value: "gg" },
-  { name: "G1", value: "g1" },
-  { name: "G2", value: "g2" },
-  { name: "G3", value: "g3" },
+  { name: "GGG", value: "ggg" },
 ];
 
 export const categorieList = [

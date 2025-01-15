@@ -4,7 +4,7 @@ import { UserService } from "@/services";
 import { useState } from "react";
 import InputMask from "react-input-mask";
 
-export function DeliverForm({ control, errors, watch, setValue }: any) {
+export function DeliverForm({ control, errors, setValue }: any) {
   const [isCep, setIsCep] = useState(false);
 
   async function onHandleCep(cep: string) {
@@ -16,7 +16,6 @@ export function DeliverForm({ control, errors, watch, setValue }: any) {
       setValue("address", cepInfo.logradouro);
       setValue("district", cepInfo.bairro);
     } catch (error) {
-      console.error(error);
       setIsCep(false);
     }
   }

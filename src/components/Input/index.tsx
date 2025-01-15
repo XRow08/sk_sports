@@ -8,7 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   theme?: string;
 }
 
-export const Input = forwardRef<HTMLTextAreaElement, Props>(
+export const Input = forwardRef<HTMLInputElement, Props>(
   ({ errors, label, theme = "white", ...rest }, ref) => {
     return (
       <label className="w-full">
@@ -23,6 +23,7 @@ export const Input = forwardRef<HTMLTextAreaElement, Props>(
         )}
         <input
           {...rest}
+          ref={ref}
           className={`text-sm lg:text-base border-[1.5px] border-neutral_6 rounded-lg p-3 font-semibold ${
             theme === "dark" ? "text-dark_neutral_11" : "text-neutral_11"
           } outline-none w-full`}

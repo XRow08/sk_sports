@@ -5,7 +5,6 @@ export function PaymentForm({ control, errors }: any) {
   const { paymentMethod, setPaymentMethod } = useOrderStore();
   const isCard = paymentMethod === "card";
   const isPix = paymentMethod === "pix";
-  const isBoleto = paymentMethod === "boleto";
 
   const methods = [
     {
@@ -17,11 +16,6 @@ export function PaymentForm({ control, errors }: any) {
       label: "Pix",
       value: "pix",
       condition: isPix,
-    },
-    {
-      label: "Boleto",
-      value: "boleto",
-      condition: isBoleto,
     },
   ];
 

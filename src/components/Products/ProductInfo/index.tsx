@@ -45,21 +45,23 @@ export function ProductInfo(product: IProduct) {
       </div>
       <div className="flex flex-col w-full">
         <div>
-          <h1 className="text-sm">324 Vendidos</h1>
+          <h1 className="text-sm">0 Vendidos</h1>
         </div>
         <div>
-          <h1 className="text-xl lg:text-[28px] font-bold">{product.name}</h1>
+          <h1 className="text-xl lg:text-[28px] font-bold mb-2">
+            {product.name}
+          </h1>
           <div className="flex flex-col lg:flex-row items-baseline justify-between">
             <div className="flex items-baseline gap-2">
               <h1 className="text-xl lg:text-[28px] font-extrabold">
                 {formatToBRL(applyDiscount(product.price, product.discount))}
               </h1>
-              <h1 className="lg:text-[20px] text-neutral_11 font-semibold">
+              <h1 className="lg:text-[20px] text-neutral_11 font-semibold line-through">
                 {formatToBRL(product.price)}
               </h1>
             </div>
             <h1 className="font-medium text-green_9">
-              Economize 10% à vista via PIX
+              Economize {product.discount}% à vista via PIX
             </h1>
           </div>
         </div>
@@ -68,8 +70,14 @@ export function ProductInfo(product: IProduct) {
 
         <div className="flex flex-col lg:flex-row items-center justify-between bg-neutral_3 border mb-6 border-neutral_6 py-2 px-3 rounded-lg">
           <div className="flex items-center gap-2">
-            <DeliverIcon />
-            <h1 className="text-green_9 font-bold">Frete grátis disponível</h1>
+            {product.price > 259 && (
+              <>
+                <DeliverIcon />
+                <h1 className="text-green_9 font-bold">
+                  Frete grátis disponível
+                </h1>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-2">
             <ArrowBack />

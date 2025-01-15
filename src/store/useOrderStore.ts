@@ -1,4 +1,4 @@
-import { IOrder, IOrderItem, IProduct } from "@/interfaces";
+import { IOrder, IOrderItem, IPixResponse, IProduct } from "@/interfaces";
 import { create } from "zustand";
 
 export interface useOrderStore {
@@ -18,6 +18,8 @@ export interface useOrderStore {
   setPaymentMethod: (paymentMethod: string) => void;
   showInstallments: boolean;
   setShowInstallments: (showInstallments: boolean) => void;
+  pixResponse: IPixResponse | undefined;
+  setPixResponse: (pixResponse: IPixResponse | undefined) => void;
 }
 
 export const useOrderStore = create<useOrderStore>((set) => ({
@@ -37,4 +39,6 @@ export const useOrderStore = create<useOrderStore>((set) => ({
   setPaymentMethod: (paymentMethod) => set({ paymentMethod }),
   showInstallments: false,
   setShowInstallments: (showInstallments) => set({ showInstallments }),
+  pixResponse: undefined,
+  setPixResponse: (pixResponse) => set({ pixResponse }),
 }));

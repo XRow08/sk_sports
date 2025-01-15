@@ -22,7 +22,7 @@ export function ProductCard(item: IProduct) {
         <p className="text-sm lg:text-lg font-medium text-start w-full">
           {item.name}
         </p>
-        <div className="flex justify-between w-full">
+        <div className="flex items-baseline justify-between w-full">
           <div className="flex items-baseline gap-1">
             <p className="font-extrabold text-sm lg:text-xl">
               {formatToBRL(discountValue)}
@@ -33,7 +33,7 @@ export function ProductCard(item: IProduct) {
           </div>
           <p className="hidden lg:block text-green_9 font-bold">PIX</p>
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex items-baseline justify-between w-full">
           <p className="font-bold text-sm lg:text-lg">
             {formatToBRL(item.price)}
           </p>

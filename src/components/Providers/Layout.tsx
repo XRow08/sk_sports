@@ -26,7 +26,7 @@ export function Layout({ children }: PropsWithChildren) {
         <Toaster position="bottom-right" />
         {children}
       </section>
-      {(!isCheckout || !isAdmin) && <Footer />}
+      {(!isCheckout && !isAdmin) && <Footer />}
     </section>
   );
 }
