@@ -6,6 +6,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   theme?: string;
   itens?: any[];
   onChangeSelected?: (selected: (string | number)[]) => void;
+  selected?: (string | number)[];
 }
 
 export function CheckBox({
@@ -14,9 +15,12 @@ export function CheckBox({
   theme = "white",
   itens,
   onChangeSelected,
+  selected,
   ...rest
 }: Props) {
-  const [selectedItems, setSelectedItems] = useState<(string | number)[]>([]);
+  const [selectedItems, setSelectedItems] = useState<(string | number)[]>(
+    selected || []
+  );
   const handleCheckboxChange = (id: string | number) => {
     setSelectedItems((prev) => {
       const updatedSelection = prev.includes(id)
@@ -48,7 +52,7 @@ export function CheckBox({
               ${
                 isChecked
                   ? "border-dark_neutral_1 bg-dark_neutral_1 text-neutral_1"
-                  : "border-neutral_6 bg-transparent"
+                  : "border-neutral_6 bg-transparent text-dark_neutral_8"
               }
               ${
                 theme === "dark" ? "text-dark_neutral_11" : "text-neutral_11"

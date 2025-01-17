@@ -5,7 +5,6 @@ import { Input, TextArea } from "@/components/Input";
 import { CheckBox } from "@/components/Input/Checkbox";
 import { categorieList, createProductInputs, sizeList } from "@/constants";
 import { FormatNumber } from "@/helpers";
-import { ICreateProduct } from "@/interfaces";
 import { ProductService, UploadService } from "@/services";
 import { createProductSchema } from "@/validators";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,7 +17,7 @@ export default function ProductCreateAdmin() {
   const [categories, setCategories] = useState<any>([]);
   const [size, setSizes] = useState<any>([]);
   const [images, setImages] = useState<any[]>([]);
-  const { formatToBRL } = FormatNumber;
+  const { formatToBRL, formatToPercentage } = FormatNumber;
   const {
     handleSubmit,
     control,
@@ -43,7 +42,6 @@ export default function ProductCreateAdmin() {
       const hasImages = images.length > 0;
       const image_url = hasImages ? await UploadService.upload(formData) : null;
       const payload = { ...values, categories, size, image_url };
-      console.log(payload);
       const newProduct = await ProductService.createOne(payload);
       toast.success("Produto criado com sucesso!");
 
@@ -51,10 +49,8 @@ export default function ProductCreateAdmin() {
         for (const i of images) {
           const formData = new FormData();
           formData.append("file", i);
-          await ProductService.createProductImages({
-            product_id: newProduct.id,
-            file: formData,
-          });
+          formData.append("product_id", newProduct.id);
+          await ProductService.createProductImages(formData);
         }
       } catch (error) {
         toast.error(
@@ -155,7 +151,7 @@ export default function ProductCreateAdmin() {
                 type="text"
                 value={
                   field.value !== undefined && field.value !== null
-                    ? formatToBRL(field.value)
+                    ? formatToPercentage(field.value)
                     : ""
                 }
                 onChange={({ target }) => {
@@ -164,8 +160,8 @@ export default function ProductCreateAdmin() {
                   field.onChange(numericValue);
                 }}
                 label="Valor descontado"
-                placeholder="R$ 00,00"
-                errors={errors.price?.message}
+                placeholder="0,00%"
+                errors={errors.discount?.message}
               />
             )}
           />

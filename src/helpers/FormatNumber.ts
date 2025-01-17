@@ -8,6 +8,18 @@ export const FormatNumber = {
     })}`;
   },
 
+  formatToPercentage(value: number) {
+    if (value === undefined || value === null) return "";
+    if (value === 0) return "0%";
+    if (value >= 100) return "100%";
+    value = value / 100;
+    return `${value.toLocaleString("pt-BR", {
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  },
+
   reverseFormatBRL(value: string) {
     const numericValue = value.replace(/[R$\s,.]/g, "").replace(",", ".");
     return parseFloat(numericValue) || 0;

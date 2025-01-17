@@ -15,7 +15,7 @@ export const ProductService = {
     return data;
   },
 
-  async createProductImages(payload: { product_id: string; file: any }) {
+  async createProductImages(payload: FormData) {
     const headers = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await Api.post<IProduct>(
       "/product-images/image",
@@ -23,6 +23,10 @@ export const ProductService = {
       headers
     );
     return data;
+  },
+
+  async deleteProductImages(id: string) {
+    await Api.delete(`/product-images/${id}`);
   },
 
   async createProductBalance(payload: ICreateProductBalance) {

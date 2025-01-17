@@ -61,10 +61,12 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
                 value={
                   priceFilter.minPrice !== undefined &&
                   priceFilter.minPrice !== null
-                    ? formatToBRL(priceFilter.minPrice.toString())
+                    ? formatToBRL(priceFilter.minPrice)
                     : ""
                 }
-                onChange={({ target }) => handleChangePrice(true, target.value)}
+                onChange={({ target }) => {
+                  handleChangePrice(true, target.value);
+                }}
               />
             </div>
             <div className="w-full flex flex-col items-end justify-end">
@@ -73,8 +75,9 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
                 type="text"
                 placeholder="R$ 100,00"
                 value={
-                  priceFilter.maxPrice
-                    ? formatToBRL(priceFilter.maxPrice.toString())
+                  priceFilter.maxPrice !== undefined &&
+                  priceFilter.maxPrice !== null
+                    ? formatToBRL(priceFilter.maxPrice)
                     : ""
                 }
                 onChange={({ target }) =>

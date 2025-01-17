@@ -1,6 +1,8 @@
 const nextConfig = {
   trailingSlash: true,
   images: {
+    loader: 'custom',
+    loaderFile: './src/helpers/ImageLoader.ts',
     unoptimized: true,
     remotePatterns: [
       {
@@ -9,9 +11,7 @@ const nextConfig = {
       },
       {
         protocol: "http",
-        hostname: "localhost",
-        port: "3333",
-        pathname: "/uploads/**",
+        hostname: "**",
       },
     ],
   },
