@@ -31,7 +31,7 @@ export default function Home() {
 
       <div className="py-[88px]">
         <h1 className="text-[28px] font-bold pb-4">Lançamentos</h1>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="flex flex-wrap gap-5">
           <ProductList slice={4} products={data!} />
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function Home() {
 
       <div className="py-[88px]">
         <h1 className="text-[28px] font-bold pb-4">Nossas coleções</h1>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="flex flex-wrap gap-5">
           {collectionsMock.map((item) => (
             <CollectionCard key={item.id} {...item} />
           ))}
@@ -58,7 +58,7 @@ export default function Home() {
 
       <div className="py-[88px]">
         <h1 className="text-[28px] font-bold pb-4">Talvez você goste</h1>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="flex flex-wrap gap-5">
           <ProductList slice={4} products={data!} />
         </div>
       </div>

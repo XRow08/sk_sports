@@ -4,12 +4,16 @@ import { Button } from "../Button";
 import { Input } from "../Input";
 import { FilterItem } from "./FilterItem";
 import { FormatNumber } from "@/helpers";
-import { sizeList } from "@/constants";
+import { categorieList, sizeList } from "@/constants";
+import { useSearchParams } from "next/navigation";
 
 export function Filters({ onChange }: { onChange: (e: any) => void }) {
   const { formatToBRL } = FormatNumber;
+  const searchParams = useSearchParams();
+  const categorieParam = searchParams.get("categorie");
   const [size, setSize] = useState("");
-  const [filter, setFilter] = useState(0);
+  const [categorie, setCategorie] = useState(categorieParam || "");
+  const [filter, setFilter] = useState(categorieParam ? 4 : 0);
   const [gender, setGender] = useState("");
   const [priceFilter, setPriceFilter] = useState<any>({
     minPrice: "",
@@ -39,7 +43,7 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
   const updateQueryString = () => {
     const url = new URL(window.location.href);
     url.search = "";
-    const filters = { size, gender, ...priceFilter };
+    const filters = { size, gender, ...priceFilter, categorie };
     onChange(filters);
   };
 
@@ -147,6 +151,31 @@ export function Filters({ onChange }: { onChange: (e: any) => void }) {
               />
               Mulher
             </h1>
+          </div>
+        </FilterItem>
+
+        <FilterItem
+          title="Categorias"
+          isOpen={filter === 4}
+          onClick={(e) => onSelect(e, 4)}
+        >
+          <div className="flex flex-wrap gap-2 w-full px-4">
+            {categorieList.map((e) => {
+              const isSelected = categorie === e.value;
+              return (
+                <div
+                  key={e.value}
+                  onClick={() => setCategorie(e.value)}
+                  className={`flex items-center justify-center w-full px-3 py-2 font-medium border cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
+                    isSelected
+                      ? "border-dark_neutral_6 bg-dark_neutral_1 text-dark_neutral_12"
+                      : "border-neutral_6 hover:border-neutral_8 bg-transparent"
+                  } `}
+                >
+                  {e.name}
+                </div>
+              );
+            })}
           </div>
         </FilterItem>
       </div>

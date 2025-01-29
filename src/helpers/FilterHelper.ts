@@ -1,5 +1,3 @@
-import { IProduct } from "@/interfaces";
-
 export const FilterHelper = {
   filterData(data: any[], filters: any) {
     return data.filter((item) => {
@@ -20,6 +18,11 @@ export const FilterHelper = {
       }
       if (filters.gender) {
         if (item.gender !== filters.gender) {
+          return false;
+        }
+      }
+      if (filters.categorie) {
+        if (!item.categories.find((e: any) => e === filters.categorie)) {
           return false;
         }
       }

@@ -1,25 +1,37 @@
 "use client";
 import { Filters } from "@/components/Filters";
 import { NotFoundIcon } from "@/components/Icons";
+import { Pagination } from "@/components/Pagination";
 import { ProductList } from "@/components/Products/ProductList";
 import { FilterHelper } from "@/helpers/FilterHelper";
 import { IProduct } from "@/interfaces";
 import { ProductService } from "@/services";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProductsPage() {
-  const [filters, setFilters] = useState({});
+  const searchParams = useSearchParams();
   const [productList, setProductList] = useState<IProduct[]>([]);
+  const [page, setPage] = useState("1");
+  const [filters, setFilters] = useState(() => {
+    const categorieParam = searchParams.get("categorie");
+    return categorieParam ? { categorie: categorieParam } : {};
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const products = await ProductService.findAll();
+      const products = await ProductService.findAll(page, "999");
       const filteresProducts = FilterHelper.filterData(products, filters);
       setProductList(filteresProducts);
     };
 
     fetchProducts();
-  }, [filters]);
+  }, [filters, page]);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage.toString());
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <section className="flex gap-10 w-full">
@@ -33,9 +45,11 @@ export default function ProductsPage() {
             +{productList.length} produtos
           </p>
         </div>
-        <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
+        <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
           {productList.length > 0 ? (
-            <ProductList slice={999} products={productList} />
+            <>
+              <ProductList slice={50} products={productList} />
+            </>
           ) : (
             <div className="w-full flex items-center justify-center col-start-2">
               <div className="flex flex-col items-center justify-center mt-[88px]">
@@ -47,6 +61,12 @@ export default function ProductsPage() {
             </div>
           )}
         </div>
+        <Pagination
+          currentPage={Number(page)}
+          totalItems={productList.length}
+          itemsPerPage={50}
+          onPageChange={handlePageChange}
+        />
       </div>
     </section>
   );
