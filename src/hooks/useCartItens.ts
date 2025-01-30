@@ -3,6 +3,7 @@ import { StorageHelper } from "@/helpers";
 import { IOrderItem, IProduct } from "@/interfaces";
 import { OrderItemService } from "@/services";
 import { useOrderStore } from "@/store";
+import toast from "react-hot-toast";
 
 export default function useCartItens() {
   const { setItems, items, order } = useOrderStore();
@@ -39,8 +40,10 @@ export default function useCartItens() {
         });
         updateLocalStorageCart(localCart);
       }
+      toast.success("Produto adicionado ao carrinho");
     } catch (error) {
       console.error(error);
+      toast.error("Erro ao adicionar produto ao carrinho");
     }
   };
 
@@ -50,9 +53,13 @@ export default function useCartItens() {
       if (!item) return;
       const updatedCart = items.filter((e) => e.id !== orderItemId);
       updateLocalStorageCart(updatedCart);
-      if (!!item.order_id) await OrderItemService.deleteById(orderItemId);
+      if (isNaN(Number(item.order_id))) {
+        await OrderItemService.deleteById(orderItemId);
+      }
+      toast.success("Produto removido do carrinho");
     } catch (error) {
       console.error(error);
+      toast.error("Erro ao remover produto do carrinho");
     }
   };
 
@@ -64,11 +71,13 @@ export default function useCartItens() {
         e.id === item.id ? { ...e, quantity: amount } : e
       );
       updateLocalStorageCart(updatedCart);
+      toast.success("Quantidade do produto alterada");
     } catch (error) {
       console.error(error);
+      toast.error("Erro ao alterar quantidade do produto");
     }
   };
-  
+
   const totalPrice = items.reduce(
     (acc, i) => acc + i.product.price * i.quantity,
     0

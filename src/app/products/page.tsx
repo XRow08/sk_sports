@@ -11,8 +11,10 @@ import { useEffect, useState } from "react";
 
 export default function ProductsPage() {
   const searchParams = useSearchParams();
-  const [productList, setProductList] = useState<IProduct[]>([]);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const [page, setPage] = useState("1");
+  const itemsPerPage = 50;
+  
   const [filters, setFilters] = useState(() => {
     const categorieParam = searchParams.get("categorie");
     return categorieParam ? { categorie: categorieParam } : {};
@@ -20,13 +22,20 @@ export default function ProductsPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const products = await ProductService.findAll(page, "999");
-      const filteresProducts = FilterHelper.filterData(products, filters);
-      setProductList(filteresProducts);
+      const products = await ProductService.findAll("1", "999999");
+      const filteredProducts = FilterHelper.filterData(products, filters);
+      setAllProducts(filteredProducts);
     };
 
     fetchProducts();
-  }, [filters, page]);
+  }, [filters]);
+
+  // Calcula os produtos da página atual
+  const getCurrentPageProducts = () => {
+    const startIndex = (Number(page) - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return allProducts.slice(startIndex, endIndex);
+  };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage.toString());
@@ -42,13 +51,13 @@ export default function ProductsPage() {
             Todos os nossos produtos
           </h1>
           <p className="text-sm lg:text-lg text-neutral_11">
-            +{productList.length} produtos
+            +{allProducts.length} produtos
           </p>
         </div>
         <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
-          {productList.length > 0 ? (
+          {allProducts.length > 0 ? (
             <>
-              <ProductList slice={50} products={productList} />
+              <ProductList products={getCurrentPageProducts()} />
             </>
           ) : (
             <div className="w-full flex items-center justify-center col-start-2">
@@ -63,8 +72,8 @@ export default function ProductsPage() {
         </div>
         <Pagination
           currentPage={Number(page)}
-          totalItems={productList.length}
-          itemsPerPage={50}
+          totalItems={allProducts.length}
+          itemsPerPage={itemsPerPage}
           onPageChange={handlePageChange}
         />
       </div>

@@ -9,11 +9,29 @@ import { BuyIcon } from "@/components/Icons/BuyIcon";
 import { AddCardIcon } from "@/components/Icons/AddCartIcon";
 import useCartItens from "@/hooks/useCartItens";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function ProductInfo(product: IProduct) {
   const { addToCart, items } = useCartItens();
   const { formatToBRL, applyDiscount } = FormatNumber;
   const isOnCart = items.find((e) => e.product_id === product.id);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const router = useRouter();
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setMousePosition({ x, y });
+  };
+
+  const onBuyNow = () => {
+    addToCart(product, 1);
+    router.push("/checkout");
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 w-full">
@@ -33,14 +51,30 @@ export function ProductInfo(product: IProduct) {
           </div>
         )}
         {product.image_url && (
-          <Image
-            src={product.image_url}
-            alt={product.name}
-            width={10000}
-            height={10000}
-            draggable={false}
-            className="min-w-[343px] w-[343px] lg:min-w-[548px] lg:w-[548px] h-[343px] lg:h-[548px] rounded-lg object-cover"
-          />
+          <div
+            className="relative min-w-[343px] w-[343px] lg:min-w-[548px] lg:w-[548px] h-[343px] lg:h-[548px] overflow-hidden rounded-lg cursor-zoom-in"
+            onMouseEnter={() => setIsZoomed(true)}
+            onMouseLeave={() => setIsZoomed(false)}
+            onMouseMove={handleMouseMove}
+          >
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              width={10000}
+              height={10000}
+              draggable={false}
+              className={`absolute w-full h-full object-cover transition-transform duration-200 ${
+                isZoomed ? "scale-[2.0]" : "scale-100"
+              }`}
+              style={
+                isZoomed
+                  ? {
+                      transformOrigin: `${mousePosition.x}% ${mousePosition.y}%`,
+                    }
+                  : undefined
+              }
+            />
+          </div>
         )}
       </div>
       <div className="flex flex-col w-full">
@@ -90,7 +124,7 @@ export function ProductInfo(product: IProduct) {
         <SelectSize sizes={product.size} />
         <Personalization />
         <div className="flex flex-col lg:flex-row items-center gap-3 w-full mt-6">
-          <Button bgColor="black" className="w-full">
+          <Button onClick={onBuyNow} bgColor="black" className="w-full">
             <BuyIcon /> Comprar agora
           </Button>
           <Button

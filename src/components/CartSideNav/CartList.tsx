@@ -12,7 +12,10 @@ export function CartList({ items }: { items: IOrderItem[] }) {
   return (
     <div className="flex flex-col w-full select-none">
       {items.map((orderItem) => (
-        <div className="flex gap-8 w-full min-h-[122px] border-b border-neutral_6 py-4 px-4">
+        <div
+          key={orderItem.id}
+          className="flex gap-8 w-full min-h-[122px] border-b border-neutral_6 py-4 px-4"
+        >
           <div className="flex w-full">
             <Image
               src={orderItem.product.image_url}

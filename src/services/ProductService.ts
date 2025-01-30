@@ -110,4 +110,9 @@ export const ProductService = {
     const { data } = await Api.delete(`/products/${id}`);
     return data;
   },
+
+  async getTotal() {
+    const { data } = await Api.get("/products");
+    return data.length;
+  },
 };
