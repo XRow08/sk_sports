@@ -18,7 +18,13 @@ export default function useCartItens() {
     return cart || [];
   };
 
-  const addToCart = async (product: IProduct, amount: number) => {
+  const addToCart = async (
+    product: IProduct,
+    amount: number,
+    size?: string,
+    perso_number?: number,
+    perso_text?: string
+  ) => {
     try {
       const localCart = await getLocalStorageCart();
       const existingItem = localCart.find((e) => e.product_id === product.id);
@@ -26,7 +32,7 @@ export default function useCartItens() {
         await onChangeAmount(amount, existingItem);
       } else {
         const total_price = amount * product.price;
-        localCart.push({
+        const newItem: any = {
           id: (localCart.length + 1).toString(),
           quantity: amount,
           product_id: product?.id,
@@ -37,7 +43,12 @@ export default function useCartItens() {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
-        });
+        };
+        if (size) newItem.size = size;
+        if (perso_number) newItem.perso_number = perso_number;
+        if (perso_text) newItem.perso_text = perso_text;
+
+        localCart.push(newItem);
         updateLocalStorageCart(localCart);
       }
       toast.success("Produto adicionado ao carrinho");
@@ -53,7 +64,9 @@ export default function useCartItens() {
       if (!item) return;
       const updatedCart = items.filter((e) => e.id !== orderItemId);
       updateLocalStorageCart(updatedCart);
+      console.log(isNaN(Number(item.order_id)));
       if (isNaN(Number(item.order_id))) {
+        console.log(orderItemId);
         await OrderItemService.deleteById(orderItemId);
       }
       toast.success("Produto removido do carrinho");
@@ -79,7 +92,7 @@ export default function useCartItens() {
   };
 
   const totalPrice = items.reduce(
-    (acc, i) => acc + i.product.price * i.quantity,
+    (acc, i) => acc + (i.product?.price || 0) * i.quantity,
     0
   );
 

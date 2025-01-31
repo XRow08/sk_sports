@@ -31,7 +31,7 @@ export const checkoutSchema = yup.object().shape({
   card_number: yup.string().optional(),
   card_name: yup.string().optional(),
   valid_at: yup.string().optional(),
-  CVV: yup.string().optional(),
+  cvv: yup.string().optional(),
   installments: yup.string().optional(),
 });
 

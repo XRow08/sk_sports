@@ -1,6 +1,6 @@
-import { OrderService, OrderItemService } from "@/services";
+import { OrderService, OrderItemService, ProductService } from "@/services";
 import { useAuthStore, useOrderStore } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCartItens from "./useCartItens";
 import { orderStatus } from "@/constants";
 
@@ -9,61 +9,120 @@ export function useCreateOrder() {
   const { user } = useAuthStore();
   const { setOrder } = useOrderStore();
   const { items, updateLocalStorageCart } = useCartItens();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   useEffect(() => {
+    let isSubscribed = true;
+
     async function createOrder() {
-      const { waiting_payment } = orderStatus;
-      if (!user) return;
-      const orders = await OrderService.findAllByUserId(user.id);
-      const hasOrder = orders.find((e) => e.status === waiting_payment);
-      console.log(hasOrder);
-      if (!hasOrder) {
-        const newOrder = await createOne({
-          user_id: user.id,
-          addition: 0,
-          discount: 0,
-          portage: 0,
-          status: waiting_payment,
-        });
-        const newItens = await Promise.all(
-          items.map((item) =>
-            OrderItemService.createOne({
-              order_id: newOrder.id,
-              product_id: item.product_id,
-              quantity: item.quantity,
+      if (!isSubscribed || isLoading || hasInitialized || !user) return;
+      setIsLoading(true);
+      setHasInitialized(true);
+
+      try {
+        const { waiting_payment } = orderStatus;
+        const orders = await OrderService.findAllByUserId(user.id);
+        const hasOrder = orders
+          .filter((e) => e.status === waiting_payment)
+          .sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )[0];
+
+        if (!hasOrder) {
+          const newOrder = await createOne({
+            user_id: user.id,
+            addition: 0,
+            discount: 0,
+            portage: 0,
+            status: waiting_payment,
+          });
+          const newItens = await Promise.all(
+            items.map(async (item) => {
+              const orderItem = await OrderItemService.createOne({
+                order_id: newOrder.id,
+                product_id: item.product_id,
+                quantity: item.quantity,
+                size: item.size,
+                perso_number: item.perso_number,
+                perso_text: item.perso_text,
+              });
+              const productData = await ProductService.findOneById(
+                item.product_id
+              );
+              return { ...orderItem, product: productData };
             })
-          )
-        );
-        updateLocalStorageCart(newItens);
-        setOrder(newOrder);
-      } else {
-        let listItems = [];
-        for (const item of items) {
-          try {
-            let hasOrderItem = undefined;
+          );
+
+          const orderTotal = newItens.reduce(
+            (sum, item) => sum + (item.total_price || 0),
+            0
+          );
+          const updatedOrder = await OrderService.updateById(newOrder.id, {});
+
+          updateLocalStorageCart(newItens);
+          setOrder(updatedOrder);
+        } else {
+          let listItems = [];
+          const existingOrderItems = await OrderItemService.findAllByOrderId(
+            hasOrder.id
+          );
+
+          for (const item of items) {
             try {
-              hasOrderItem = await OrderItemService.findOneById(item.id);
+              const existingOrderItem = existingOrderItems.find(
+                (orderItem) =>
+                  orderItem.product_id === item.product_id &&
+                  orderItem.size.toLowerCase() === item.size.toLowerCase()
+              );
+
+              if (existingOrderItem) {
+                const newQuantity = existingOrderItem.quantity + item.quantity;
+                const updatedOrderItem = await OrderItemService.updateById(
+                  existingOrderItem.id,
+                  { quantity: newQuantity }
+                );
+
+                const productData = await ProductService.findOneById(
+                  existingOrderItem.product_id
+                );
+                listItems.push({ ...updatedOrderItem, product: productData });
+                continue;
+              }
+
+              const newOrderItem = await OrderItemService.createOne({
+                order_id: hasOrder.id,
+                product_id: item.product_id,
+                quantity: item.quantity,
+                size: item.size,
+                perso_number: item.perso_number,
+                perso_text: item.perso_text,
+              });
+              const productData = await ProductService.findOneById(
+                newOrderItem.product_id
+              );
+              listItems.push({ ...newOrderItem, product: productData });
             } catch (error) {
               console.error(error);
             }
-            if (hasOrderItem) return listItems.push(hasOrderItem);
-            const newOrderItem = await OrderItemService.createOne({
-              order_id: hasOrder.id,
-              product_id: item.product_id,
-              quantity: item.quantity,
-            });
-            const itemNew = await OrderItemService.findOneById(newOrderItem.id);
-            listItems.push(itemNew);
-          } catch (error) {
-            console.error(error);
-            return;
           }
+
+          const updatedOrder = await OrderService.updateById(hasOrder.id, {});
+          setOrder(updatedOrder);
+          updateLocalStorageCart(listItems);
         }
-        listItems.filter((item) => item !== null);
-        setOrder(hasOrder);
-        updateLocalStorageCart(listItems);
+      } finally {
+        if (isSubscribed) {
+          setIsLoading(false);
+        }
       }
     }
+
     createOrder();
-  }, [setOrder]);
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [hasInitialized]);
 }

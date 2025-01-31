@@ -10,9 +10,18 @@ interface StoneItem {
   code: string;
 }
 
+export interface ICreateCard {
+  name?: string;
+  number: string;
+  cvv: string;
+  month: number;
+  year: number;
+}
+
 export interface ICreatePurchase {
   customer: { phone: string; cpf: string; email: string };
   order_id: string;
+  cvv: string;
   paymentMethod: string;
   expiration_date?: string;
   token?: string;

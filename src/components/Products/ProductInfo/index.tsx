@@ -11,12 +11,20 @@ import useCartItens from "@/hooks/useCartItens";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store";
+import toast from "react-hot-toast";
 
 export function ProductInfo(product: IProduct) {
   const { addToCart, items } = useCartItens();
   const { formatToBRL, applyDiscount } = FormatNumber;
   const isOnCart = items.find((e) => e.product_id === product.id);
   const [isZoomed, setIsZoomed] = useState(false);
+  const { user, setShowAuth, setStepAuth } = useAuthStore();
+  const [persoValues, setPersoValues] = useState({
+    perso_text: "",
+    perso_number: "",
+  });
+  const [size, setSize] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const router = useRouter();
 
@@ -29,8 +37,32 @@ export function ProductInfo(product: IProduct) {
   };
 
   const onBuyNow = () => {
+    if (!size) return toast.error("Selecione o tamanho do produto");
     addToCart(product, 1);
-    router.push("/checkout");
+    if (user) {
+      router.push("/checkout");
+    } else {
+      setShowAuth(true);
+      setStepAuth(0);
+    }
+  };
+
+  const handlePersoValues = (values: {
+    perso_text: string;
+    perso_number: string;
+  }) => {
+    setPersoValues(values);
+  };
+
+  const handleAddToCart = () => {
+    if (!size) return toast.error("Selecione o tamanho do produto");
+    addToCart(
+      product,
+      isOnCart ? isOnCart.quantity + 1 : 1,
+      size,
+      Number(persoValues.perso_number),
+      persoValues.perso_text
+    );
   };
 
   return (
@@ -121,16 +153,14 @@ export function ProductInfo(product: IProduct) {
             </h1>
           </div>
         </div>
-        <SelectSize sizes={product.size} />
-        <Personalization />
+        <SelectSize sizes={product.size} onChange={setSize} />
+        <Personalization onChange={handlePersoValues} />
         <div className="flex flex-col lg:flex-row items-center gap-3 w-full mt-6">
           <Button onClick={onBuyNow} bgColor="black" className="w-full">
             <BuyIcon /> Comprar agora
           </Button>
           <Button
-            onClick={() =>
-              addToCart(product, isOnCart ? isOnCart.quantity + 1 : 1)
-            }
+            onClick={handleAddToCart}
             bgColor="white-transparent"
             className="w-full font-semibold"
           >

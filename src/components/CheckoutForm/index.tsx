@@ -10,9 +10,11 @@ import { useOrderStore } from "@/store";
 import { AddressService, AppMaxService, UserService } from "@/services";
 import { ICreateAddress, ICreatePurchase, IPixResponse } from "@/interfaces";
 import toast from "react-hot-toast";
+import router from "next/router";
 
 export function CheckoutForm() {
-  const { paymentMethod, setPaymentMethod, order, setPixResponse } = useOrderStore();
+  const { paymentMethod, setPaymentMethod, order, setPixResponse } =
+    useOrderStore();
   const {
     handleSubmit,
     control,
@@ -46,9 +48,21 @@ export function CheckoutForm() {
 
   async function onSave(values: any) {
     try {
-      console.log(order);
       if (!order) return;
       await createAddress(values);
+      const month = values.valid_at.split("/")[0];
+      const year = values.valid_at.split("/")[1];
+      let token = null;
+      if (paymentMethod === "credit-card") {
+        const { data } = await AppMaxService.createCard({
+          cvv: values.cvv,
+          month: Number(month),
+          number: values.card_number,
+          year: Number(year),
+          name: values.card_name,
+        });
+        token = data.token;
+      }
       const payload: ICreatePurchase = {
         customer: {
           email: values.email,
@@ -56,13 +70,17 @@ export function CheckoutForm() {
           cpf: values.cpf,
         },
         order_id: order?.id,
+        cvv: values.cvv,
         paymentMethod: paymentMethod,
         expiration_date: values.expiration_date,
-        token: values.token,
-        installments: values.installments,
+        token: token,
+        installments: values.installments || 1,
       };
       const response: IPixResponse = await AppMaxService.createOrder(payload);
       if (response.success) {
+        if (paymentMethod === "credit-card") {
+          return router.push("/checkout/success");
+        }
         setPixResponse(response);
         toast.success("Compra realizada com sucesso");
       } else {

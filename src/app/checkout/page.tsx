@@ -15,7 +15,7 @@ export default function Checkout() {
 
   return (
     <section className="flex flex-col w-full min-h-screen h-full">
-      <header className="h-[64px] w-full bg-dark_neutral_1 flex items-center justify-center border-b border-dark_neutral_6">
+      <header className="h-[64px] w-full fixed top-0 left-0 z-10 bg-dark_neutral_1 flex items-center justify-center border-b border-dark_neutral_6">
         <h1 className="text-dark_neutral_12 font-extrabold text-2xl">
           Pagamento
         </h1>
@@ -24,7 +24,7 @@ export default function Checkout() {
         <div className="pt-[64px] w-1/2 px-20 pb-[88px] flex flex-col items-start justify-start">
           {!pixResponse ? <CheckoutForm /> : <PixPayment />}
         </div>
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-dark_neutral_1 px-20 pt-[64px] pb-4">
+        <div className="fixed right-0 top-10 w-1/2 h-full max-h-[calc(100vh-40px)] overflow-auto bg-dark_neutral_1 px-20 pt-[64px] pb-4">
           <div className="flex flex-col gap-3 border-b border-dark_neutral_6 pb-4">
             <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
               Subtotal{" "}

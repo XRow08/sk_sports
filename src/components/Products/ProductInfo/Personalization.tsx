@@ -3,6 +3,23 @@ import { useState } from "react";
 
 export function Personalization({ onChange }: { onChange?: (e: any) => void }) {
   const [isPerso, setIsPerso] = useState(false);
+  const [persoValues, setPersoValues] = useState({
+    perso_text: "",
+    perso_number: "",
+  });
+
+  const handleChangePersonalization = (
+    type: "text" | "number",
+    value: string
+  ) => {
+    const newValues = {
+      ...persoValues,
+      [type === "text" ? "perso_text" : "perso_number"]: value,
+    };
+    setPersoValues(newValues);
+    onChange?.(newValues);
+  };
+
   return (
     <div className="flex flex-col w-full p-4 gap-3 font-medium border rounded-lg transition-all duration-300 ease-in-out">
       <h1 className="text-neutral_11 font-medium">
@@ -44,12 +61,19 @@ export function Personalization({ onChange }: { onChange?: (e: any) => void }) {
         <div className="flex flex-col lg:flex-row items-center gap-3 justify-between w-full">
           <input
             placeholder="Digite o nome desejado"
+            onChange={(e) =>
+              handleChangePersonalization("text", e.target.value)
+            }
             className={`p-3 border w-full rounded-lg outline-none ${
               !isPerso ? "border-neutral_8" : "border-neutral_6 text-neutral_11"
             }`}
           />
           <input
             placeholder="Digite o número desejado"
+            onChange={(e) =>
+              handleChangePersonalization("number", e.target.value)
+            }
+            type="number"
             className={`p-3 border w-full rounded-lg outline-none ${
               !isPerso ? "border-neutral_8" : "border-neutral_6 text-neutral_11"
             }`}

@@ -8,9 +8,10 @@ import { LessIcon } from "../Icons/LessIcon";
 export function CartList({ items }: { items: IOrderItem[] }) {
   const { addToCart, onChangeAmount } = useCartItens();
   const { formatToBRL, applyDiscount } = FormatNumber;
+  console.log(items);
 
   return (
-    <div className="flex flex-col w-full select-none">
+    <div className="flex flex-col w-full select-none max-h-[75vh] overflow-y-auto">
       {items.map((orderItem) => (
         <div
           key={orderItem.id}
@@ -18,37 +19,38 @@ export function CartList({ items }: { items: IOrderItem[] }) {
         >
           <div className="flex w-full">
             <Image
-              src={orderItem.product.image_url}
-              alt={orderItem.product.name}
+              src={orderItem.product?.image_url || ""}
+              alt={orderItem.product?.name || ""}
               width={10000}
               height={10000}
               draggable={false}
               className="min-w-[90px] w-[90px] rounded-lg object-cover mr-2"
             />
             <div className="h-full w-full flex flex-col justify-between">
-              <h1 className="font-medium">{orderItem.product.name}</h1>
+              <h1 className="font-medium">{orderItem.product?.name}</h1>
               <div className="flex items-center w-full gap-6">
                 <h1 className="font-medium">
                   Tamanho:{" "}
-                  <span className="font-semibold">
-                    {orderItem.product.size[0]}
-                  </span>
+                  <span className="font-semibold">{orderItem.size}</span>
                 </h1>
                 <h1 className="font-medium">
-                  Personaliza: <span className="font-semibold">Não</span>
+                  Personaliza:{" "}
+                  <span className="font-semibold">
+                    {!!orderItem.perso_text ? "Sim" : "Não"}
+                  </span>
                 </h1>
               </div>
               <div className="flex items-center gap-2">
                 <h1 className="font-semibold">
-                  {formatToBRL(orderItem.each_price)}
-                </h1>
-                <h1 className="font-medium text-neutral_11 text-sm">
                   {formatToBRL(
                     applyDiscount(
-                      orderItem.product.price,
-                      orderItem.product.discount
+                      orderItem.product?.price,
+                      orderItem.product?.discount
                     )
                   )}
+                </h1>
+                <h1 className="font-medium text-neutral_11 text-sm line-through">
+                  {formatToBRL(orderItem.each_price)}
                 </h1>
               </div>
             </div>
@@ -66,7 +68,7 @@ export function CartList({ items }: { items: IOrderItem[] }) {
               <h1 className="font-medium select-none">{orderItem.quantity}</h1>
               <div
                 onClick={() =>
-                  addToCart(orderItem.product, orderItem.quantity + 1)
+                  addToCart(orderItem.product!, orderItem.quantity + 1)
                 }
                 className="bg-neutral_4 hover:bg-neutral_6 rounded-full border border-neutral_6 hover:border-neutral_8 p-1 cursor-pointer transition-all ease-in-out duration-300"
               >

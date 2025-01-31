@@ -2,8 +2,18 @@
 import { sizeList } from "@/constants";
 import { useState } from "react";
 
-export function SelectSize({ sizes }: { sizes: string[] }) {
+type Props = {
+  sizes: string[];
+  onChange: (size: string) => void;
+};
+
+export function SelectSize({ sizes, onChange }: Props) {
   const [size, setSize] = useState("");
+
+  const handleChangeSize = (size: string) => {
+    setSize(size);
+    onChange(size);
+  };
 
   return (
     <div className="w-full">
@@ -17,7 +27,9 @@ export function SelectSize({ sizes }: { sizes: string[] }) {
           return (
             <div
               key={e.name}
-              onClick={() => (isAvailable ? setSize(e.name) : undefined)}
+              onClick={() =>
+                isAvailable ? handleChangeSize(e.name) : undefined
+              }
               className={`flex items-center justify-center w-[64px] px-3 py-2 font-medium border cursor-pointer rounded-lg transition-all duration-300 ease-in-out ${
                 isSelected
                   ? "border-dark_neutral_6 bg-dark_neutral_1 text-dark_neutral_12"

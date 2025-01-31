@@ -30,6 +30,9 @@ export interface IOrderItem {
   order_id: string;
   product_id: string;
   quantity: number;
+  perso_number?: number;
+  perso_text?: string;
+  size: string;
   each_price: number;
   total_price: number;
   createdAt: Date;
@@ -42,6 +45,9 @@ export interface ICreateOrderItem {
   order_id: string;
   product_id: string;
   quantity: number;
+  perso_number?: number;
+  perso_text?: string;
+  size: string;
   each_price?: number;
   total_price?: number;
 }

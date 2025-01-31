@@ -3,13 +3,13 @@ import { CreditForm } from "./PaymentForm/CreditForm";
 
 export function PaymentForm({ control, errors }: any) {
   const { paymentMethod, setPaymentMethod } = useOrderStore();
-  const isCard = paymentMethod === "card";
+  const isCard = paymentMethod === "credit-card";
   const isPix = paymentMethod === "pix";
 
   const methods = [
     {
       label: "Cartão de crédito",
-      value: "card",
+      value: "credit-card",
       condition: isCard,
     },
     {
@@ -41,7 +41,7 @@ export function PaymentForm({ control, errors }: any) {
               />
               {e.label}
             </h1>
-            {isCard && e.value === "card" && (
+            {isCard && e.value === "credit-card" && (
               <CreditForm control={control} isCredit={isCard} errors={errors} />
             )}
           </>
