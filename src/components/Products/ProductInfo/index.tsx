@@ -24,6 +24,7 @@ export function ProductInfo(product: IProduct) {
     perso_text: "",
     perso_number: "",
   });
+
   const [size, setSize] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const router = useRouter();
@@ -38,7 +39,13 @@ export function ProductInfo(product: IProduct) {
 
   const onBuyNow = () => {
     if (!size) return toast.error("Selecione o tamanho do produto");
-    addToCart(product, 1);
+    addToCart({
+      product,
+      amount: 1,
+      size,
+      perso_number: Number(persoValues.perso_number),
+      perso_text: persoValues.perso_text,
+    });
     if (user) {
       router.push("/checkout");
     } else {
@@ -56,13 +63,13 @@ export function ProductInfo(product: IProduct) {
 
   const handleAddToCart = () => {
     if (!size) return toast.error("Selecione o tamanho do produto");
-    addToCart(
+    addToCart({
       product,
-      isOnCart ? isOnCart.quantity + 1 : 1,
+      amount: isOnCart ? isOnCart.quantity + 1 : 1,
       size,
-      Number(persoValues.perso_number),
-      persoValues.perso_text
-    );
+      perso_number: Number(persoValues.perso_number),
+      perso_text: persoValues.perso_text,
+    });
   };
 
   return (

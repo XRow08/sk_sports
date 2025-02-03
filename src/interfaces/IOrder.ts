@@ -32,7 +32,7 @@ export interface IOrderItem {
   quantity: number;
   perso_number?: number;
   perso_text?: string;
-  size: string;
+  size?: string;
   each_price: number;
   total_price: number;
   createdAt: Date;

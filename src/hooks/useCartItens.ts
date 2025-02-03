@@ -5,94 +5,162 @@ import { OrderItemService } from "@/services";
 import { useOrderStore } from "@/store";
 import toast from "react-hot-toast";
 
-export default function useCartItens() {
+interface CartItem extends IOrderItem {
+  product: IProduct;
+  size?: string;
+  perso_number?: number;
+  perso_text?: string;
+}
+
+interface AddToCartParams {
+  product: IProduct;
+  amount: number;
+  size?: string;
+  perso_number?: number;
+  perso_text?: string;
+}
+
+const STORAGE_KEY = "order_items";
+
+export default function useCartItems() {
   const { setItems, items, order } = useOrderStore();
+  const showSuccessToast = (message: string) => toast.success(message);
+  const showErrorToast = (message: string) => toast.error(message);
 
-  const updateLocalStorageCart = (updatedCart: IOrderItem[]) => {
-    StorageHelper.setItem(`order_items`, updatedCart);
-    setItems(updatedCart);
-  };
-
-  const getLocalStorageCart = async () => {
-    const cart: IOrderItem[] = StorageHelper.getItem(`order_items`);
-    return cart || [];
-  };
-
-  const addToCart = async (
-    product: IProduct,
-    amount: number,
-    size?: string,
-    perso_number?: number,
-    perso_text?: string
-  ) => {
+  const updateLocalStorageCart = (updatedCart: CartItem[]) => {
     try {
-      const localCart = await getLocalStorageCart();
-      const existingItem = localCart.find((e) => e.product_id === product.id);
+      StorageHelper.setItem(STORAGE_KEY, updatedCart);
+      setItems(updatedCart as IOrderItem[]);
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      showErrorToast("Erro ao atualizar carrinho");
+    }
+  };
+
+  const getLocalStorageCart = (): CartItem[] => {
+    try {
+      return StorageHelper.getItem(STORAGE_KEY) || [];
+    } catch (error) {
+      console.error("Error getting cart:", error);
+      showErrorToast("Erro ao carregar carrinho");
+      return [];
+    }
+  };
+
+  const calculateItemPrice = (quantity: number, price: number): number => {
+    return quantity * price;
+  };
+
+  const createNewCartItem = ({
+    product,
+    amount,
+    size,
+    perso_number,
+    perso_text,
+  }: AddToCartParams): CartItem => {
+    const localCart = getLocalStorageCart();
+    return {
+      id: `${Date.now()}-${localCart.length + 1}`,
+      quantity: amount,
+      product_id: product.id,
+      product: product,
+      order_id: order?.id || "1",
+      total_price: calculateItemPrice(amount, product.price),
+      each_price: product.price,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+      ...(size && { size }),
+      ...(perso_number && { perso_number }),
+      ...(perso_text && { perso_text }),
+    };
+  };
+
+  const addToCart = async ({
+    product,
+    amount,
+    size,
+    perso_number,
+    perso_text,
+  }: AddToCartParams) => {
+    try {
+      console.log(product);
+      const localCart = getLocalStorageCart();
+      const existingItem = localCart.find(
+        (item) => item.product_id === product.id
+      );
+
       if (existingItem) {
         await onChangeAmount(amount, existingItem);
-      } else {
-        const total_price = amount * product.price;
-        const newItem: any = {
-          id: (localCart.length + 1).toString(),
-          quantity: amount,
-          product_id: product?.id,
-          product: product,
-          order_id: order?.id || "1",
-          total_price,
-          each_price: product?.price,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          deletedAt: null,
-        };
-        if (size) newItem.size = size;
-        if (perso_number) newItem.perso_number = perso_number;
-        if (perso_text) newItem.perso_text = perso_text;
-
-        localCart.push(newItem);
-        updateLocalStorageCart(localCart);
+        return;
       }
-      toast.success("Produto adicionado ao carrinho");
+
+      const newItem = createNewCartItem({
+        product,
+        amount,
+        size,
+        perso_number,
+        perso_text,
+      });
+
+      updateLocalStorageCart([...localCart, newItem]);
+      showSuccessToast("Produto adicionado ao carrinho");
     } catch (error) {
-      console.error(error);
-      toast.error("Erro ao adicionar produto ao carrinho");
+      console.error("Error adding to cart:", error);
+      showErrorToast("Erro ao adicionar produto ao carrinho");
     }
   };
 
   const removeFromCart = async (orderItemId: string) => {
     try {
-      const item = items.find((e) => e.id === orderItemId);
+      const item = items.find((item) => item.id === orderItemId);
       if (!item) return;
-      const updatedCart = items.filter((e) => e.id !== orderItemId);
+
+      const updatedCart = items.filter((item) => item.id !== orderItemId);
       updateLocalStorageCart(updatedCart);
-      console.log(isNaN(Number(item.order_id)));
-      if (isNaN(Number(item.order_id))) {
-        console.log(orderItemId);
+
+      const isLocalId =
+        item.id.includes("-") && !isNaN(Number(item.id.split("-")[0]));
+      if (!isLocalId) {
         await OrderItemService.deleteById(orderItemId);
       }
-      toast.success("Produto removido do carrinho");
+
+      showSuccessToast("Produto removido do carrinho");
     } catch (error) {
-      console.error(error);
-      toast.error("Erro ao remover produto do carrinho");
+      console.error("Error removing from cart:", error);
+      showErrorToast("Erro ao remover produto do carrinho");
     }
   };
 
-  const onChangeAmount = async (amount: number, item: IOrderItem) => {
+  const onChangeAmount = async (amount: number, item: CartItem) => {
     try {
-      if (amount === 0) return await removeFromCart(item.id);
-      const localCart = await getLocalStorageCart();
-      const updatedCart = localCart.map((e) =>
-        e.id === item.id ? { ...e, quantity: amount } : e
+      if (amount <= 0) {
+        await removeFromCart(item.id);
+        return;
+      }
+
+      const localCart = getLocalStorageCart();
+      const updatedCart = localCart.map((cartItem) =>
+        cartItem.id === item.id
+          ? {
+              ...cartItem,
+              quantity: amount,
+              total_price: calculateItemPrice(amount, cartItem.product.price),
+              updatedAt: new Date(),
+            }
+          : cartItem
       );
+
       updateLocalStorageCart(updatedCart);
-      toast.success("Quantidade do produto alterada");
+      showSuccessToast("Quantidade do produto alterada");
     } catch (error) {
-      console.error(error);
-      toast.error("Erro ao alterar quantidade do produto");
+      console.error("Error changing amount:", error);
+      showErrorToast("Erro ao alterar quantidade do produto");
     }
   };
 
   const totalPrice = items.reduce(
-    (acc, i) => acc + (i.product?.price || 0) * i.quantity,
+    (acc, item) => acc + calculateItemPrice(item.quantity, item.product.price),
     0
   );
 
