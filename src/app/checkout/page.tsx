@@ -20,29 +20,29 @@ export default function Checkout() {
           Pagamento
         </h1>
       </header>
-      <section className="flex items-start min-h-screen h-full text-dark_neutral_12 relative">
-        <div className="pt-[64px] w-1/2 px-20 pb-[88px] flex flex-col items-start justify-start">
+      <section className="flex flex-col-reverse lg:flex-row items-start min-h-screen h-full text-dark_neutral_12 relative">
+        <div className="lg:pt-[64px] w-full lg:w-1/2 px-4 lg:px-20 pb-[88px] flex flex-col items-start justify-start">
           {!pixResponse ? <CheckoutForm /> : <PixPayment />}
         </div>
-        <div className="fixed right-0 top-10 w-1/2 h-full max-h-[calc(100vh-40px)] overflow-auto bg-dark_neutral_1 px-20 pt-[64px] pb-4">
-          <div className="flex flex-col gap-3 border-b border-dark_neutral_6 pb-4">
-            <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
+        <div className=" lg:fixed lg:right-0 lg:top-10 w-full lg:w-1/2 h-full max-h-[calc(100vh-40px)] overflow-auto lg:bg-dark_neutral_1 px-4 lg:px-20 pt-24 lg:pt-[64px] pb-4">
+          <div className="flex flex-col gap-3 border-b border-dark_neutral_6 text-neutral_11 lg:text-dark_neutral_11 pb-4">
+            <h1 className="text-lg flex items-center justify-between">
               Subtotal{" "}
               <span className="text-base">{formatToBRL(totalPrice)}</span>
             </h1>
-            <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
+            <h1 className="text-lg flex items-center justify-between">
               Desconto{" "}
               <span className="text-base">
                 {formatToBRL(order?.discount || 0)}
               </span>
             </h1>
-            <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
+            <h1 className="text-lg flex items-center justify-between">
               Frete{" "}
               <span className="text-base">
                 {formatToBRL(order?.portage || 0)}
               </span>
             </h1>
-            <h1 className="text-lg text-dark_neutral_11 flex items-center justify-between">
+            <h1 className="text-lg flex items-center justify-between">
               Juros{" "}
               <span className="text-base">
                 {formatToBRL(order?.addition || 0)}
@@ -55,7 +55,7 @@ export default function Checkout() {
               </span>
             </h1>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 hidden lg:block">
             {items.map((e) => (
               <CheckoutItem key={e.id} orderItem={e} />
             ))}

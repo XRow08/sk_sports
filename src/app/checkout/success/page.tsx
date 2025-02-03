@@ -12,7 +12,7 @@ export default function Checkout() {
         </h1>
       </header>
       <section className="flex items-center justify-center min-h-screen h-full text-dark_neutral_12 relative">
-        <div className="pt-[64px] w-1/2 pb-[88px] flex flex-col items-center justify-center gap-6">
+        <div className="pt-[64px] w-full lg:w-1/2 px-4 lg:px-0 pb-[88px] flex flex-col items-center justify-center gap-6">
           <svg
             width="104"
             height="104"
@@ -33,7 +33,7 @@ export default function Checkout() {
             />
           </svg>
 
-          <h1 className="text-black font-extrabold text-2xl">
+          <h1 className="text-black text-center font-extrabold text-2xl">
             Pagamento concluído com sucesso
           </h1>
 
