@@ -4,6 +4,7 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from "@/components/Icons";
+import { CheckCircle2, Clock, Package, Truck, XCircle } from "lucide-react";
 
 export const bannersHome1 = [
   { id: 1, image: "/images/banners/banner01.png", mobile: "/images/banners/banner01-mobile.png" },
@@ -24,6 +25,34 @@ export const orderStatus = {
   canceled: "canceled",
   shipping: "shipping",
   delivered: "delivered",
+};
+
+export const statusConfig = {
+  waiting_payment: {
+    icon: Clock,
+    color: "text-yellow-500",
+    message: "Aguardando pagamento",
+  },
+  paid: {
+    icon: CheckCircle2,
+    color: "text-green-500",
+    message: "Pagamento confirmado",
+  },
+  canceled: {
+    icon: XCircle,
+    color: "text-red-500",
+    message: "Pedido cancelado",
+  },
+  shipping: {
+    icon: Truck,
+    color: "text-blue-500",
+    message: "Em transporte",
+  },
+  delivered: {
+    icon: Package,
+    color: "text-green-500",
+    message: "Pedido entregue",
+  },
 };
 
 export const headerLinks = [

@@ -8,8 +8,7 @@ import { LessIcon } from "../Icons/LessIcon";
 export function CartList({ items }: { items: IOrderItem[] }) {
   const { addToCart, onChangeAmount } = useCartItens();
   const { formatToBRL, applyDiscount } = FormatNumber;
-  console.log(items);
-
+  
   return (
     <div className="flex flex-col w-full select-none max-h-[75vh] overflow-y-auto">
       {items.map((orderItem) => (
