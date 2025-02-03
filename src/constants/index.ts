@@ -6,16 +6,16 @@ import {
 } from "@/components/Icons";
 
 export const bannersHome1 = [
-  { id: 1, image: "/images/banners/banner01.png" },
-  { id: 2, image: "/images/banners/banner02.png" },
-  { id: 3, image: "/images/banners/banner03.png" },
-  { id: 4, image: "/images/banners/banner04.png" },
+  { id: 1, image: "/images/banners/banner01.png", mobile: "/images/banners/banner01-mobile.png" },
+  { id: 2, image: "/images/banners/banner02.png", mobile: "/images/banners/banner02-mobile.png" },
+  { id: 3, image: "/images/banners/banner03.png", mobile: "/images/banners/banner03-mobile.png" },
+  { id: 4, image: "/images/banners/banner04.png", mobile: "/images/banners/banner04-mobile.png" },
 ];
 
 export const bannersHome2 = [
-  { id: 1, image: "/images/banners/banner05.png" },
-  { id: 2, image: "/images/banners/banner06.png" },
-  { id: 3, image: "/images/banners/banner07.png" },
+  { id: 1, image: "/images/banners/banner05.png", mobile: "/images/banners/banner05-mobile.png" },
+  { id: 2, image: "/images/banners/banner06.png", mobile: "/images/banners/banner06-mobile.png" },
+  { id: 3, image: "/images/banners/banner07.png", mobile: "/images/banners/banner07-mobile.png" },
 ];
 
 export const orderStatus = {
@@ -29,8 +29,8 @@ export const orderStatus = {
 export const headerLinks = [
   { name: "Ínicio", href: "/" },
   { name: "Todos os produtos", href: "/products" },
-  { name: "Contato", href: "/contact" },
-  { name: "Rastreio", href: "/rastreio" },
+  { name: "Contato", href: "http://wa.me/5541997598409" },
+  { name: "Rastreio", href: "https://www.correios.com.br/rastreio" },
 ];
 
 export const departments = [

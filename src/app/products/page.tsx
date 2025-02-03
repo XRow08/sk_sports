@@ -30,7 +30,6 @@ export default function ProductsPage() {
     fetchProducts();
   }, [filters]);
 
-  // Calcula os produtos da página atual
   const getCurrentPageProducts = () => {
     const startIndex = (Number(page) - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -54,13 +53,13 @@ export default function ProductsPage() {
             +{allProducts.length} produtos
           </p>
         </div>
-        <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
+        <div className="min-w-full">
           {allProducts.length > 0 ? (
-            <>
+            <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
               <ProductList products={getCurrentPageProducts()} />
-            </>
+            </div>
           ) : (
-            <div className="w-full flex items-center justify-center col-start-2">
+            <div className="w-full flex flex-col lg:flex-row items-center justify-center col-start-2">
               <div className="flex flex-col items-center justify-center mt-[88px]">
                 <NotFoundIcon />
                 <h1 className="text-2xl font-semibold mt-8">
