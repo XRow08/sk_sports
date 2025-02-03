@@ -2,6 +2,7 @@
 import { IProduct } from "@/interfaces";
 import { useState } from "react";
 import { SizesTable } from "./SizesTable";
+import { Button } from "@/components/Button";
 
 export function ProductDescription(product: IProduct) {
   const [activeTab, setActiveTab] = useState<"description" | "measures">(
@@ -23,27 +24,19 @@ export function ProductDescription(product: IProduct) {
       <h1 className="text-[28px] font-bold">Descrição do produto</h1>
       <p>{product.description}</p>
 
-      <div className="flex gap-2">
-        <button
+      <div className="flex flex-col lg:flex-row gap-2">
+        <Button
+          bgColor={activeTab === "description" ? "black" : "white"}
           onClick={() => setActiveTab("description")}
-          className={`px-4 py-2 rounded-full ${
-            activeTab === "description"
-              ? "bg-black text-white"
-              : "bg-gray-100 text-black"
-          }`}
         >
           Sobre o produto
-        </button>
-        <button
+        </Button>
+        <Button
+          bgColor={activeTab === "measures" ? "black" : "white"}
           onClick={() => setActiveTab("measures")}
-          className={`px-4 py-2 rounded-full ${
-            activeTab === "measures"
-              ? "bg-black text-white"
-              : "bg-gray-100 text-black"
-          }`}
         >
           Medidas do produto
-        </button>
+        </Button>
       </div>
 
       {activeTab === "description" ? (
@@ -53,8 +46,8 @@ export function ProductDescription(product: IProduct) {
               key={e.name}
               className="p-5 flex items-center justify-between w-full border-r border-b border-neutral_6"
             >
-              <h1 className="font-medium">{e.name}</h1>
-              <h1 className="font-semibold text-lg">{e.description}</h1>
+              <h1 className="font-medium text-xs lg:text-base">{e.name}</h1>
+              <h1 className="font-semibold text-sm lg:text-lg">{e.description}</h1>
             </div>
           ))}
         </div>

@@ -68,7 +68,12 @@ export function CartList({ items }: { items: IOrderItem[] }) {
               <h1 className="font-medium select-none">{orderItem.quantity}</h1>
               <div
                 onClick={() =>
-                  addToCart(orderItem.product!, orderItem.quantity + 1)
+                  addToCart({
+                    product: orderItem.product!,
+                    amount: orderItem.quantity + 1,
+                    size: orderItem.size,
+                    perso_text: orderItem.perso_text,
+                  })
                 }
                 className="bg-neutral_4 hover:bg-neutral_6 rounded-full border border-neutral_6 hover:border-neutral_8 p-1 cursor-pointer transition-all ease-in-out duration-300"
               >

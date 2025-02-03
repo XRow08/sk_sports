@@ -19,20 +19,20 @@ export function SizesTable() {
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="border p-2 text-left">Tamanho</th>
-              <th className="border p-2 text-left">Comprimento</th>
-              <th className="border p-2 text-left">Largura</th>
-              <th className="border p-2 text-left">Altura</th>
+            <tr className="bg-neutral_3">
+              <th className="border p-2 text-center text-xs lg:text-base text-neutral_12 font-medium">Tamanho</th>
+              <th className="border p-2 text-center text-xs lg:text-base text-neutral_12 font-medium">Comprimento</th>
+              <th className="border p-2 text-center text-xs lg:text-base text-neutral_12 font-medium">Largura</th>
+              <th className="border p-2 text-center text-xs lg:text-base text-neutral_12 font-medium">Altura</th>
             </tr>
           </thead>
           <tbody>
             {SIZES_TABLE.map((size) => (
               <tr key={size.size}>
-                <td className="border p-2">{size.size}</td>
-                <td className="border p-2">{size.length}</td>
-                <td className="border p-2">{size.width}</td>
-                <td className="border p-2">{size.height}</td>
+                <td className="border p-2 text-center text-xs lg:text-base font-semibold">{size.size}</td>
+                <td className="border p-2 text-center text-xs lg:text-base font-semibold">{size.length}</td>
+                <td className="border p-2 text-center text-xs lg:text-base font-semibold">{size.width}</td>
+                <td className="border p-2 text-center text-xs lg:text-base font-semibold">{size.height}</td>
               </tr>
             ))}
           </tbody>
