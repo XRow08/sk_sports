@@ -5,6 +5,19 @@ import {
   YouTubeIcon,
 } from "@/components/Icons";
 
+export const bannersHome1 = [
+  { id: 1, image: "/images/banners/banner01.png" },
+  { id: 2, image: "/images/banners/banner02.png" },
+  { id: 3, image: "/images/banners/banner03.png" },
+  { id: 4, image: "/images/banners/banner04.png" },
+];
+
+export const bannersHome2 = [
+  { id: 1, image: "/images/banners/banner05.png" },
+  { id: 2, image: "/images/banners/banner06.png" },
+  { id: 3, image: "/images/banners/banner07.png" },
+];
+
 export const orderStatus = {
   waiting_payment: "waiting_payment",
   paid: "paid",
