@@ -84,7 +84,6 @@ export default function useCartItems() {
     perso_text,
   }: AddToCartParams) => {
     try {
-      console.log(product);
       const localCart = getLocalStorageCart();
       const existingItem = localCart.find(
         (item) => item.product_id === product.id

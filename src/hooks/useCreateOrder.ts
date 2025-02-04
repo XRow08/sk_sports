@@ -16,13 +16,21 @@ export function useCreateOrder() {
   const { setOrder } = useOrderStore();
   const { items, updateLocalStorageCart } = useCartItems();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [hasProcessed, setHasProcessed] = useState(false);
 
   const createOrderItem = async (
     orderId: string,
-    item: IOrderItem & { product: IProduct }
+    item: IOrderItem
   ): Promise<IOrderItem> => {
     try {
-      console.log("item", item);
+      const existingItems = await OrderItemService.findAllByOrderId(orderId);
+      const existingItem = existingItems.find(
+        (existing) =>
+          existing.product_id === item.product_id && existing.size === item.size
+      );
+      if (existingItem) {
+        return { ...existingItem, product: item.product };
+      }
       const createItemData: ICreateOrderItem = {
         order_id: orderId,
         product_id: item.product_id,
@@ -50,32 +58,34 @@ export function useCreateOrder() {
     try {
       const existingItems = await OrderItemService.findAllByOrderId(order.id);
       const processedItems: IOrderItem[] = [];
-      console.log("existingItems", existingItems);
 
       for (const cartItem of items) {
-        const existingItem = existingItems.find(
-          (item) =>
-            item.product_id === cartItem.product_id &&
-            item.size?.toLowerCase() === cartItem.size?.toLowerCase()
-        );
-        console.log("existingItem", existingItem);
+        const isLocalId =
+          cartItem.id.includes("-") &&
+          !isNaN(Number(cartItem.id.split("-")[0]));
 
-        if (existingItem) {
-          const newQuantity = existingItem.quantity + cartItem.quantity;
-          const newTotalPrice = newQuantity * cartItem.product.price;
-          console.log(newQuantity, newTotalPrice);
-          const updatedItem = await OrderItemService.updateById(
-            existingItem.id,
-            { quantity: newQuantity, total_price: newTotalPrice }
+        if (!isLocalId) {
+          const existingItem = existingItems.find(
+            (item) => item.id === cartItem.id
           );
-          console.log(updatedItem);
+          if (existingItem) {
+            const updatedItem = await OrderItemService.updateById(existingItem.id, {
+              quantity: cartItem.quantity,
+              total_price: cartItem.quantity * cartItem.product.price,
+            });
+            processedItems.push({ ...updatedItem, product: cartItem.product });
+          }
+          continue;
+        }
 
-          processedItems.push({ ...updatedItem, product: cartItem.product });
-        } else {
-          console.log("cartItem", cartItem);
-          const newItem = await createOrderItem(order.id, cartItem);
-          console.log("newItem", newItem);
-          processedItems.push(newItem);
+        const newItem = await createOrderItem(order.id, cartItem);
+        processedItems.push(newItem);
+      }
+
+      for (const existingItem of existingItems) {
+        const stillExists = items.some((item) => item.id === existingItem.id);
+        if (!stillExists) {
+          await OrderItemService.deleteById(existingItem.id);
         }
       }
 
@@ -117,11 +127,12 @@ export function useCreateOrder() {
   };
 
   const processOrder = async () => {
-    if (!user || isProcessing || items.length === 0) {
+    if (!user || isProcessing || items.length === 0 || hasProcessed) {
       console.log("Process order conditions not met:", {
         hasUser: !!user,
         isProcessing,
         itemsCount: items.length,
+        hasProcessed,
       });
       return;
     }
@@ -157,7 +168,7 @@ export function useCreateOrder() {
 
       updateLocalStorageCart(orderItems);
       setOrder(finalOrder);
-      toast.success("Pedido processado com sucesso!");
+      setHasProcessed(true);
     } catch (error: any) {
       console.error("Error processing order:", {
         error,
@@ -171,7 +182,7 @@ export function useCreateOrder() {
   };
 
   useEffect(() => {
-    if (items.length > 0 && user) {
+    if (items.length > 0 && user && !hasProcessed) {
       processOrder();
     }
   }, [items.length, user]);

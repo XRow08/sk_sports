@@ -2,11 +2,14 @@ import { useOrderStore } from "@/store";
 import Image from "next/image";
 import { Button } from "../Button";
 import { useEffect, useState } from "react";
+import { OrderService } from "@/services";
+import { useRouter } from "next/navigation";
 
 export function PixPayment() {
-  const { pixResponse } = useOrderStore();
+  const { pixResponse, order } = useOrderStore();
   const [timeLeft, setTimeLeft] = useState<string>("1:00:00");
   const [copied, setCopied] = useState(false);
+  const { push } = useRouter();
 
   const handleCopyPix = async () => {
     try {
@@ -38,6 +41,23 @@ export function PixPayment() {
     };
     const timer = setInterval(calculateTimeLeft, 1000);
     return () => clearInterval(timer);
+  }, [pixResponse]);
+
+  useEffect(() => {
+    const checkOrderStatus = async () => {
+      if (!pixResponse || !order) return;
+      try {
+        const checkOrder = await OrderService.findOneById(order.id);
+        if (checkOrder.status === "paid") {
+          push("/checkout/success");
+        }
+      } catch (error) {
+        console.error("Error checking order status:", error);
+      }
+    };
+    const statusCheck = setInterval(checkOrderStatus, 60000);
+    checkOrderStatus();
+    return () => clearInterval(statusCheck);
   }, [pixResponse]);
 
   return (

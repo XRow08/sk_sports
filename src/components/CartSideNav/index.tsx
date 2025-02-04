@@ -7,7 +7,7 @@ import Link from "next/link";
 export function CartSideNav() {
   const { showCart, setShowCart, items } = useOrderStore();
   const { user, setShowAuth, setStepAuth } = useAuthStore();
-  console.log(items);
+  
   function checkUser() {
     if (user) {
       setShowCart(false);
