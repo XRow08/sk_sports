@@ -12,10 +12,10 @@ export function Pagination({
   onPageChange,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
+  
   const renderPageNumbers = () => {
     const pages = [];
-    const maxVisiblePages = 8;
+    const maxVisiblePages =  9;
 
     for (let i = 1; i <= Math.min(maxVisiblePages, totalPages); i++) {
       pages.push(

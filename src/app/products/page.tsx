@@ -13,7 +13,7 @@ export default function ProductsPage() {
   const searchParams = useSearchParams();
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const [page, setPage] = useState("1");
-  const itemsPerPage = 50;
+  const itemsPerPage = 51;
   
   const [filters, setFilters] = useState(() => {
     const categorieParam = searchParams.get("categorie");
@@ -56,7 +56,7 @@ export default function ProductsPage() {
         <div className="min-w-full">
           {allProducts.length > 0 ? (
             <div className="grid grid-cols-2 2xl:grid-cols-3 gap-3 lg:gap-5 w-full mt-6 lg:mt-0">
-              <ProductList products={getCurrentPageProducts()} />
+              <ProductList slice={51} products={getCurrentPageProducts()} />
             </div>
           ) : (
             <div className="w-full flex flex-col lg:flex-row items-center justify-center col-start-2">
