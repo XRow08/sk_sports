@@ -46,13 +46,18 @@ export function CreditForm({ control, errors, isCredit }: any) {
           name="valid_at"
           control={control}
           render={({ field }) => (
-            <Input
-              {...field}
-              type="text"
-              label="Data de validade"
-              placeholder="MM/AA"
-              errors={errors.valid_at?.message}
-            />
+            <InputMask mask="99/99" {...field}>
+              {(inputProps) => (
+                <Input
+                  {...inputProps}
+                  type="text"
+                  label="Data de validade"
+                  placeholder="MM/AA"
+                  errors={errors.valid_at?.message}
+              />
+            )}
+          </InputMask>
+            
           )}
         />
         <Controller
@@ -63,6 +68,7 @@ export function CreditForm({ control, errors, isCredit }: any) {
               {...field}
               type="text"
               label="CVV"
+              maxLength={3}
               placeholder="Digite os 3 dígitos do seu cartão"
               errors={errors.cvv?.message}
             />

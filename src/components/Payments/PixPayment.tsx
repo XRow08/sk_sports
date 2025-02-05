@@ -61,7 +61,7 @@ export function PixPayment() {
   }, [pixResponse]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-neutral_12">
+    <div className="flex flex-col mt-10 items-center justify-center text-neutral_12">
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="font-semibold text-xl">PIX gerado com sucesso</h1>
         <p className="text-center w-full">

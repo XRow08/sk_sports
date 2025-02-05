@@ -10,7 +10,8 @@ import { useOrderStore } from "@/store";
 import { AddressService, AppMaxService, UserService } from "@/services";
 import { ICreateAddress, ICreatePurchase, IPixResponse } from "@/interfaces";
 import toast from "react-hot-toast";
-import router from "next/router";
+import { useRouter } from "next/navigation";
+
 
 export function CheckoutForm() {
   const { paymentMethod, setPaymentMethod, order, setPixResponse } =
@@ -23,6 +24,7 @@ export function CheckoutForm() {
   } = useForm({
     resolver: yupResolver(checkoutSchema),
   });
+  const { push } = useRouter();
 
   async function createAddress(payload: ICreateAddress) {
     if (!order) return;
@@ -50,10 +52,10 @@ export function CheckoutForm() {
     try {
       if (!order) return;
       await createAddress(values);
-      const month = values.valid_at.split("/")[0];
-      const year = values.valid_at.split("/")[1];
       let token = null;
       if (paymentMethod === "credit-card") {
+        const month = values.valid_at.split("/")[0];
+        const year = values.valid_at.split("/")[1];
         const { data } = await AppMaxService.createCard({
           cvv: values.cvv,
           month: Number(month),
@@ -79,7 +81,7 @@ export function CheckoutForm() {
       const response: IPixResponse = await AppMaxService.createOrder(payload);
       if (response.success) {
         if (paymentMethod === "credit-card") {
-          return router.push("/checkout/success");
+          return push("/checkout/success");
         }
         setPixResponse(response);
         toast.success("Compra realizada com sucesso");
