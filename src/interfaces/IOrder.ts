@@ -1,4 +1,5 @@
 import { IProduct } from "./IProduct";
+import { IUser } from "./IUser";
 
 export interface IOrder {
   id: string;
@@ -12,6 +13,7 @@ export interface IOrder {
   updatedAt: Date;
   deletedAt: Date | null;
   origin: string | null;
+  user: IUser | null;
 }
 
 export interface ICreateOrder {

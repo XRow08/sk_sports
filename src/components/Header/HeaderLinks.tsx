@@ -13,12 +13,20 @@ export function HeaderLinks({ isAdmin }: { isAdmin: boolean }) {
             Lista de produtos
           </Link>
           <Link
-            href={"/admin/transactions"}
+            href={"/admin/orders"}
             className="font-medium text-neutral_11 px-4"
           >
             Transações
           </Link>
+
+          <Link
+            href={"/"}
+            className="font-medium text-neutral_11 px-4"
+          >
+            Voltar para a home
+          </Link>
         </>
+
       ) : (
         headerLinks.map((link) => {
           return (
