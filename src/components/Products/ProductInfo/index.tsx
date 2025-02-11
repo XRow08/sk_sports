@@ -20,6 +20,8 @@ export function ProductInfo(product: IProduct) {
   const isOnCart = items.find((e) => e.product_id === product.id);
   const [isZoomed, setIsZoomed] = useState(false);
   const { user, setShowAuth, setStepAuth } = useAuthStore();
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [persoValues, setPersoValues] = useState({
     perso_text: "",
     perso_number: "",
@@ -76,18 +78,66 @@ export function ProductInfo(product: IProduct) {
     <div className="flex flex-col lg:flex-row gap-6 w-full">
       <div className="flex flex-col-reverse lg:flex-row items-start gap-4">
         {product.images.length > 0 && (
-          <div className="flex flex-row lg:flex-col w-[86px] gap-2 py-2">
-            {product.images.slice(0, 6).map((e) => (
-              <Image
-                src={e}
-                alt={product.name}
-                width={10000}
-                height={10000}
-                draggable={false}
-                className="w-full h-[82px] rounded-lg object-cover"
-              />
-            ))}
-          </div>
+          <>
+            <div className="flex flex-row lg:flex-col w-[86px] gap-2 py-2">
+              {product.images.slice(0, 6).map((image, index) => (
+                <button
+                  key={image}
+                  onClick={() => {
+                    setSelectedImageIndex(index);
+                    setIsCarouselOpen(true);
+                  }}
+                  className="w-full h-[82px] relative cursor-pointer"
+                >
+                  <Image
+                    src={image}
+                    alt={product.name}
+                    width={10000}
+                    height={10000}
+                    draggable={false}
+                    className="w-full h-full rounded-lg object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+
+            {isCarouselOpen && (
+              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+                <div className="bg-white p-4 rounded-lg lg:max-w-4xl w-[90%] lg:w-full">
+                  <div className="flex justify-end mb-2">
+                    <button
+                      onClick={() => setIsCarouselOpen(false)}
+                      className="text-neutral_11 hover:text-neutral-900"
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                  <div className="relative flex items-center justify-center">
+                    <Image
+                      src={product.images[selectedImageIndex]}
+                      alt={product.name}
+                      width={10000}
+                      height={10000}
+                      draggable={false}
+                      className="w-[250px] h-[250px] lg:w-[500px] lg:h-[500px] object-cover rounded-lg"
+                    />
+                    <button
+                      onClick={() => setSelectedImageIndex((prev) => prev === 0 ? product.images.length - 1 : prev - 1)}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full"
+                    >
+                      ←
+                    </button>
+                    <button
+                      onClick={() => setSelectedImageIndex((prev) => prev === product.images.length - 1 ? 0 : prev + 1)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full"
+                    >
+                      →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
         {product.image_url && (
           <div
